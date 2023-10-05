@@ -25,18 +25,6 @@ class HomePage extends StatelessWidget {
         children: [
 
 
-
-
-          // Container(
-          //   height: 250,
-          //   width: 400,
-          //   color: Colors.amber,
-          //   child: Image.network(
-          //     fit: BoxFit.cover,
-          //     'https://images.unsplash.com/photo-1682686581556-a3f0ee0ed556?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fHx8&auto=format&fit=crop&w=500&q=60',
-          //   ),
-          // ),
-
           Container(
             height: 250,
             width: 400,
@@ -110,14 +98,34 @@ class HomePage extends StatelessWidget {
                 }
             ),
           ),
-          // Row(
-          //   children: [
-          //   Expanded(child: Container(color: Colors.red, child: Text('aslkdj'),)),
-          //   Expanded(child: Container(color: Colors.amber, child: Text('aslkdj'),)),
-          //   ],
-          // )
-
-
+         Padding(
+           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+           child: Text('You may also like', style: TextStyle(fontSize: 25),),
+         ),
+          Container(
+            height: 200,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: books.length,
+                itemBuilder: (context, index){
+                  final book = books[index];
+                  return  Container(
+                    margin: EdgeInsets.only(right: 10),
+                    height: 200,
+                    width: 150,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Image.network(book.imageUrl, height: 150, width: 100, fit: BoxFit.cover,),
+                        Text(book.title),
+                        Text(book.genre)
+                      ],
+                    ),
+                  );
+                }
+            ),
+          ),
+          AppSizes.gapH12,
         ],
       )
     );
