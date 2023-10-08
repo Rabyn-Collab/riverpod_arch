@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutterspod/constants/app_colors.dart';
 import 'package:flutterspod/views/home_page.dart';
+import 'package:flutterspod/views/response.dart';
+import 'package:get/get.dart';
+
 
 
 
 
 void main (){
-
 
 runApp(Home());
 }
@@ -17,7 +19,7 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
        theme: ThemeData.light(
          useMaterial3: true
@@ -27,7 +29,7 @@ class Home extends StatelessWidget {
            backgroundColor:  AppColors.mainColor
          ),
        ),
-      home: HomePage(),
+      home: ResponsePage(),
     );
   }
 }
