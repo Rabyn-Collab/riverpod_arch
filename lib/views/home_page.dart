@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutterspod/constants/app_sizes.dart';
 import 'package:flutterspod/constants/book_data.dart';
 import 'package:flutterspod/models/book.dart';
@@ -26,23 +27,23 @@ class HomePage extends StatelessWidget {
         body: ListView(
           children: [
             Container(
-                height: 250,
-                width: 400,
+                height: 250.h,
+                width: 400.w,
                 color: Colors.amber,
                 child: Image.asset(
                   'assets/images/book.jpg',
                   fit: BoxFit.cover,
                 )),
             AppSizes.gapH16,
-            _buildContainer(width: 380, height: 250, isRateShow: true),
+            _buildContainer(width: 380.w, height: 250.h, isRateShow: true),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              padding:  EdgeInsets.symmetric(vertical: 10.h, horizontal: 10.w),
               child: Text(
                 'You may also like',
-                style: TextStyle(fontSize: 25),
+                style: TextStyle(fontSize: 25.sp),
               ),
             ),
-            _buildContainer(width: 170, height: 220, isRateShow: false),
+            _buildContainer(width: 170.w, height: 220.h, isRateShow: false),
             AppSizes.gapH12,
           ],
         ));
@@ -54,7 +55,7 @@ class HomePage extends StatelessWidget {
         Align(
           alignment: Alignment.bottomCenter,
           child: Container(
-            height: 200,
+            height: 200.h,
             child: Card(
               color: Colors.orangeAccent,
               child: Row(
@@ -63,7 +64,7 @@ class HomePage extends StatelessWidget {
                   Expanded(
                     flex: 2,
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 20, right: 10),
+                      padding:  EdgeInsets.only(left: 20.w, right: 10.w),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,10 +91,12 @@ class HomePage extends StatelessWidget {
             left: 15,
             bottom: 20,
             child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(10.r),
                 child: Image.network(
                   book.imageUrl,
-                  height: 200,
+                  width: 100.w,
+                  height: 200.h,
+                  fit: BoxFit.fill,
                 )))
       ],
     );
@@ -111,7 +114,7 @@ class HomePage extends StatelessWidget {
           itemBuilder: (context, index) {
             final book = books[index];
             return Container(
-              margin: EdgeInsets.only(right: 10),
+              margin: EdgeInsets.only(right: 10.w),
               width: width,
               child: isRateShow ? InkWell(
                   onTap: (){
@@ -129,8 +132,8 @@ class HomePage extends StatelessWidget {
       children: [
         Image.network(
           book.imageUrl,
-          height: 150,
-          width: 120,
+          height: 150.h,
+          width: 120.w,
           fit: BoxFit.cover,
         ),
         Text(book.title),
