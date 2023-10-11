@@ -5,11 +5,15 @@ final someData = Provider((ref) => 'Hello World');
 
 
 
-final countProvider = ChangeNotifierProvider((ref) => CountsNotifier());
+final countProvider = ChangeNotifierProvider((ref) => CountsNotifier(ref.watch(someData)));
 
 
 
 class  CountsNotifier  extends ChangeNotifier{
+  
+  final String nameSome;
+  
+  CountsNotifier(this.nameSome);
 
   int number = 0;
 

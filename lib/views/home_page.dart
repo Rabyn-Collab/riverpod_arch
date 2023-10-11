@@ -16,11 +16,13 @@ class HomePage extends StatelessWidget {
             width: double.infinity,
             child: Consumer(
               builder: (context, ref, child) {
-                final number = ref.watch(countProvider).number;
+
+                final d = ref.watch(countProvider);
                 return Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('$number', style: TextStyle(fontSize: 50),),
+                    Text(d.nameSome),
+                    Text('${d.number}', style: TextStyle(fontSize: 50),),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
