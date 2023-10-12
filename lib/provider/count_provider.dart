@@ -1,7 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final someData = Provider((ref) => 'Hello World');
+
+
+
+final countState = StateProvider<int>((ref) => 0);
+
+
+final someData = Provider<String>((ref) => 'Hello World');
 
 
 
