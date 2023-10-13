@@ -4,7 +4,10 @@ import '../models/todo.dart';
 
 
 
-final todoProvider = StateNotifierProvider<TodoProvider, List<Todo>>((ref) => TodoProvider([]));
+final todoProvider = StateNotifierProvider<TodoProvider, List<Todo>>((ref) => TodoProvider([
+  Todo(DateTime: DateTime.now().toString(), todo: 'This is my Task'),
+  Todo(DateTime: DateTime.now().toString(), todo: 'This is my Task on Staring New'),
+]));
 
 
 class TodoProvider extends StateNotifier<List<Todo>>{
@@ -16,8 +19,9 @@ class TodoProvider extends StateNotifier<List<Todo>>{
   }
 
 
-  void removeTodo(){
-
+  void removeTodo(int index){
+   state.removeAt(index);
+   state = [...state];
   }
 
   void updateTodo(){
@@ -25,6 +29,7 @@ class TodoProvider extends StateNotifier<List<Todo>>{
 
 
   }
+
 
 
 
