@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterspod/constants/app_sizes.dart';
 import 'package:flutterspod/models/todo.dart';
 import 'package:flutterspod/provider/todo_provider.dart';
+import 'package:flutterspod/views/widgets/update_page.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 
@@ -13,6 +15,8 @@ class HomePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ref) {
+
+
     final state = ref.watch(todoProvider);
 
     return Scaffold(
@@ -31,7 +35,8 @@ class HomePage extends ConsumerWidget {
                      ));
                    }else{
                      ref.read(todoProvider.notifier).addTodo(
-                       Todo(DateTime: DateTime.now().toString(), todo: val.trim())
+                       Todo(DateTime: DateTime.now().toString(),
+                           todo: val.trim())
                      );
                      todoController.clear();
                    }
@@ -49,7 +54,7 @@ class HomePage extends ConsumerWidget {
                             final todo = state[index];
                             final date = DateTime.parse(todo.DateTime);
                             final d = DateFormat.yMd().format(date);
-                            print(d);
+
                             return ListTile(
                               contentPadding: EdgeInsets.zero,
                               leading: Icon(Icons.task),
@@ -61,11 +66,14 @@ class HomePage extends ConsumerWidget {
                                   children: [
                                     IconButton(
 
-                                        onPressed: (){}, icon: Icon(Icons.edit)),
+                                        onPressed: (){
+                                          Get.to(() => UpdatePage(todo: todo), transition: Transition.leftToRight);
+                                        }, icon: Icon(Icons.edit)),
                                     IconButton(
 
                                         onPressed: (){
-                                          ref.read(todoProvider.notifier).removeTodo(index);
+                                          ref.read(todoProvider.notifier)
+                                              .removeTodo(index);
                                         }, icon: Icon(Icons.delete)),
                                   ],
                                 ),
