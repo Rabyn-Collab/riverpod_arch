@@ -8,10 +8,12 @@ import 'package:get/get.dart';
 
 
 
-
 void main (){
 
+
+
 runApp(ProviderScope(child: Home()));
+
 }
 
 
