@@ -1,27 +1,23 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutterspod/constants/api.dart';
-import 'package:flutterspod/models/movie.dart';
-import 'package:flutterspod/shared/client_provider.dart';
+
+import 'package:flutterspod/models/MealCata.dart';
 
 
 
-final apiService = FutureProvider((ref) => ApiService(ref.watch(clientProvider)).getMovieCategory());
 
-class ApiService {
-final Dio dio;
-ApiService(this.dio);
+class ApiService{
 
-   Future<List<Movie>>  getMovieCategory () async{
-     try{
-    final response = await dio.get(Api.getPopular);
-
-    return (response.data['results'] as List).map((e) =>Movie.fromJson(e)).toList();
-
-     }on DioException catch (err){
-       print(err);
-       throw '${err.message}';
-     }
+ static final dio  = Dio();
+  static  Future<List<MealCata>> getMealData() async{
+    try{
+      final response = await dio.get(
+          'https://www.themealdb.com/api/json/v1/1/categories.php');
+      return  (response.data['categories'] as List).map((e) => MealCata.fromjson(e)).toList();
+    }on DioException catch (err){
+       throw err.message.toString();
+    }
   }
 
+  
+  
 }

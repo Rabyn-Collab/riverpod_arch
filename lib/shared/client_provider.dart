@@ -3,12 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterspod/constants/api.dart';
 
 
-
-
-
-
-
-
 final clientProvider = Provider((ref) => Dio(
   BaseOptions(
      headers: {
