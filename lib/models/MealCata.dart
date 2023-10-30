@@ -23,3 +23,26 @@ class MealCata{
 
 
 }
+
+
+class MealItem{
+  final String strMeal;
+  final String strMealThumb;
+
+  MealItem({
+    required this.strMealThumb,
+    required this.strMeal,
+
+  });
+
+
+  factory MealItem.fromjson(Map<String, dynamic> json){
+    return MealItem(
+        strMeal: json['strMeal'],
+        strMealThumb: json['strMealThumb'],
+
+    );
+  }
+
+
+}

@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutterspod/provider/api_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutterspod/views/detail_page.dart';
+import 'package:get/get.dart';
 
 
 
@@ -27,19 +29,25 @@ class HomePage extends ConsumerWidget {
                         crossAxisSpacing: 5
                       ),
                       itemBuilder: (context, index){
-                        return Column(
+                       final cat = data[index];
+                        return InkWell(
+                          onTap: (){
+                            Get.to(() => DetailPage(category: cat.strCategory));
+                          },
+                          child: Column(
 
-                          children: [
-                            Text(data[index].strCategory),
-                            CachedNetworkImage(
-                               placeholder: (c, s) => SpinKitSquareCircle(
-                                 color: Colors.pink,
-                                 size: 20.0,
+                            children: [
+                              Text(cat.strCategory),
+                              CachedNetworkImage(
+                                 placeholder: (c, s) => SpinKitSquareCircle(
+                                   color: Colors.pink,
+                                   size: 20.0,
 
-                               ),
-                               imageUrl: data[index].strCategoryThumb),
-                            Text(data[index].strCategoryDescription,maxLines: 3, )
-                          ],
+                                 ),
+                                 imageUrl: cat.strCategoryThumb),
+                              Text(cat.strCategoryDescription,maxLines: 3, )
+                            ],
+                          ),
                         );
                       }
                   );
