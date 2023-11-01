@@ -16,18 +16,12 @@ class ApiService {
   ApiService(this.dio);
 
 
-Future<Either<String, List<Movie>>> getMovieByCategory({required String apiPath,required int page})async{
+Future<Either<String, List<Movie>>> getMovieByCategory({required String apiPath, required int page})async{
   try{
-
-    final response = await dio.get('Api.baseUrl/$apiPath',
+    final response = await dio.get(apiPath,
     queryParameters: {
-      'page': page
+      'page': 1
     },
-    options: Options(
-      headers: {
-        'Authorization': Api.apiToken
-      }
-    )
     );
    return Right((response.data['results'] as List).map(
            (e) => Movie.fromJson(e)).toList());
