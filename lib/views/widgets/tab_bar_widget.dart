@@ -11,7 +11,7 @@ class TabBarWidget extends ConsumerWidget{
 
   @override
   Widget build(BuildContext context, ref) {
-    final state = ref.watch(movieProvider);
+    final state = ref.watch(movieProvider(pageKey));
     if(state.isLoad){
       return Center(child: CircularProgressIndicator());
     }else if(state.isError){

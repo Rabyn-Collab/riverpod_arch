@@ -7,7 +7,6 @@ class MovieState{
   final String errMessage;
   final List<Movie> movies;
   final int page;
-  final String apiPath;
 
   MovieState({
     required this.isError,
@@ -15,7 +14,6 @@ class MovieState{
     required this.errMessage,
     required this.movies,
     required this.page,
-    required this.apiPath
 });
 
  MovieState copyWith({
@@ -24,7 +22,6 @@ class MovieState{
    String? errMessage,
    List<Movie>? movies,
    int? page,
-   String? apiPath
   }){
    return MovieState(
        isError: isError ?? this.isError,
@@ -32,7 +29,6 @@ class MovieState{
        errMessage: errMessage ?? this.errMessage,
        movies: movies ?? this.movies,
       page: page ?? this.page,
-     apiPath: apiPath ?? this.apiPath
    );
  }
 
@@ -44,7 +40,6 @@ class MovieState{
         'isLoad: ${isLoad}, '
         'errMessage: ${errMessage}, '
         'movies: ${movies}, '
-        'apiPath: ${apiPath}, '
        ')';
   }
 

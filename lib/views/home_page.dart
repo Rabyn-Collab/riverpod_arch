@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterspod/constants/api.dart';
 import 'package:flutterspod/provider/movie_provider.dart';
+import 'package:flutterspod/views/search_page.dart';
 import 'package:flutterspod/views/widgets/tab_bar_widget.dart';
 import 'package:get/get.dart';
 
@@ -25,14 +26,13 @@ class HomePage extends ConsumerWidget {
               textBaseline: TextBaseline.ideographic,
               children: [
                 Text('Movie Tmdb',style: context.textTheme.titleMedium,),
-                IconButton(onPressed: (){}, icon: Icon(CupertinoIcons.search))
+                IconButton(onPressed: (){
+                  Get.to(() => SearchPage(), transition: Transition.leftToRight);
+                }, icon: Icon(CupertinoIcons.search))
               ],
             ),
           ),
           bottom: TabBar(
-            onTap: (index){
-               ref.read(movieProvider.notifier).changeCategory(Api.getTopRated);
-            },
             // indicatorSize: TabBarIndicatorSize.tab,
             // indicator: BoxDecoration(
             //   color: Colors.pink,
@@ -56,9 +56,9 @@ class HomePage extends ConsumerWidget {
           body: TabBarView(
             physics: NeverScrollableScrollPhysics(),
               children: [
-              TabBarWidget(pageKey: 'popular'),
-              TabBarWidget(pageKey: 'top_rated'),
-              TabBarWidget(pageKey: 'upcoming'),
+              TabBarWidget(pageKey: Api.getPopular),
+              TabBarWidget(pageKey: Api.getTopRated),
+              TabBarWidget(pageKey: Api.getUpcoming),
 
                 ])
       ),

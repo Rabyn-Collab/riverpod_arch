@@ -10,31 +10,37 @@ final emptyMovie = MovieState(
     errMessage: '',
     movies: [],
   page: 1,
-  apiPath: Api.getPopular
 );
 
-final movieProvider = StateNotifierProvider<MovieProvider, MovieState>((ref) => MovieProvider(emptyMovie, ref.watch(apiService)));
+
+
+final movieProvider =
+StateNotifierProvider.family<MovieProvider, MovieState, String>((ref, String api)
+=> MovieProvider(emptyMovie, api: api, service: ref.watch(apiService)));
 
 class MovieProvider extends StateNotifier<MovieState>{
   final ApiService service;
-  MovieProvider(super.state, this.service){
-    getMovieByCategory();
+  final String api;
+  MovieProvider(super.state, {required this.api, required this.service}){
+    getMovieByCategory(api);
   }
 
-  Future<void>  getMovieByCategory()async{
+  Future<void>  getMovieByCategory(String apiPath)async{
     state = state.copyWith(isLoad: true, isError: false);
-    final response = await service.getMovieByCategory(apiPath: state.apiPath, page: state.page);
+    final response = await service.getMovieByCategory(apiPath: apiPath, page: state.page);
     response.fold(
             (l) => state = state.copyWith(isError: true,isLoad: false, errMessage: l),
-            (r) => state = state.copyWith(isError: false,isLoad: false,movies: r));
+            (r) => state = state.copyWith(isError: false,isLoad: false,
+                movies: [...state.movies, ...r]));
+  }
+
+  Future<void>  loadMore(String apiPath)async{
+    state = state.copyWith(page: state.page + 1);
+    getMovieByCategory(apiPath);
   }
 
 
-  void changeCategory(String apiPath){
-    state = state.copyWith(apiPath: apiPath);
-    getMovieByCategory();
 
-  }
 
 
 }

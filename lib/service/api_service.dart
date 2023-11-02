@@ -34,6 +34,25 @@ Future<Either<String, List<Movie>>> getMovieByCategory({required String apiPath,
 
 
 
+  Future<Either<String, List<Movie>>> getSearchMovie({required String query})async{
+    try{
+      final response = await dio.get(Api.getSearchMovie,
+        queryParameters: {
+          'query': query
+        },
+      );
+      return Right((response.data['results'] as List).map(
+              (e) => Movie.fromJson(e)).toList());
+    }on DioException catch(err){
+      return Left('${err.response}');
+    }
+
+
+  }
+
+
+
+
 
 
 }
