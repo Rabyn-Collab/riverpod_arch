@@ -1,13 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutterspod/common_widgets/toast_widget.dart';
 import 'package:flutterspod/constants/app_sizes.dart';
 import 'package:flutterspod/provider/search_provider.dart';
 
 
 class SearchPage extends ConsumerWidget {
-  const SearchPage({super.key});
-
+   SearchPage({super.key});
+ final searchController = TextEditingController();
   @override
   Widget build(BuildContext context, ref) {
     final state = ref.watch(searchProvider);
@@ -21,9 +22,16 @@ class SearchPage extends ConsumerWidget {
             children: [
               AppSizes.gapH10,
               TextFormField(
+                controller: searchController,
                 autofocus: true,
                 onFieldSubmitted: (val){
-                  ref.read(searchProvider.notifier).getSearchMovie(query: val.trim());
+                  if(val.isEmpty){
+                   Toasts.showError(message: 'please provide search text');
+                  }else{
+                    ref.read(searchProvider.notifier).getSearchMovie(query: val.trim());
+                    searchController.clear();
+                  }
+
                 },
                 decoration: InputDecoration(
                   hintText: 'search movies',
@@ -32,7 +40,12 @@ class SearchPage extends ConsumerWidget {
               ),
               AppSizes.gapH10,
               state.isLoad ? Center(child: CircularProgressIndicator())
-                  : state.isError ? Center(child: Text('${state.errMessage}')): Expanded(
+                  : state.isError ? Column(
+                    children: [
+                      AppSizes.gapH10,
+                      Center(child: Text('${state.errMessage}')),
+                    ],
+                  ): Expanded(
                 child: GridView.builder(
                     itemCount: state.movies.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

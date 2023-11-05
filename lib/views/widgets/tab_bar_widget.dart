@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterspod/provider/movie_provider.dart';
+import 'package:flutterspod/views/detail_page.dart';
+import 'package:get/get.dart';
 
 
 
@@ -30,7 +32,11 @@ class TabBarWidget extends ConsumerWidget{
             ),
             itemBuilder: (context, index){
             final movie = state.movies[index];
-            return CachedNetworkImage(imageUrl: movie.poster_path, fit: BoxFit.cover,);
+            return InkWell(
+                onTap: (){
+                  Get.to(() => DetailPage(movie: movie));
+                },
+                child: CachedNetworkImage(imageUrl: movie.poster_path, fit: BoxFit.cover,));
             }
         ),
       );

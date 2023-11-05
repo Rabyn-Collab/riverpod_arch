@@ -14,7 +14,7 @@ final emptyMovie = MovieState(
 
 
 final searchProvider =
-StateNotifierProvider<SearchProvider, MovieState>((ref)
+StateNotifierProvider.autoDispose<SearchProvider, MovieState>((ref)
 => SearchProvider(emptyMovie,  service: ref.watch(apiService)));
 
 class SearchProvider extends StateNotifier<MovieState>{
