@@ -26,7 +26,7 @@ class Movie{
     return Movie(
         title: json['title'] ?? '',
         id: json['id'],
-        backdrop_path: 'https://image.tmdb.org/t/p/w500${json['backdrop_path']}',
+        backdrop_path: 'https://image.tmdb.org/t/p/original${json['backdrop_path']}',
         overview: json['overview'],
         poster_path: 'https://image.tmdb.org/t/p/w500${json['poster_path']}',
         vote_average: '${json['vote_average']}'

@@ -15,6 +15,8 @@ class _PlayVideoFromNetworkState extends State<PlayVideoFromNetwork> {
   @override
   void initState() {
     controller = PodPlayerController(
+      podPlayerConfig: PodPlayerConfig(
+      ),
       playVideoFrom: PlayVideoFrom.youtube('https://youtu.be/${widget.keyString}'),
     )..initialise();
     super.initState();
@@ -28,6 +30,8 @@ class _PlayVideoFromNetworkState extends State<PlayVideoFromNetwork> {
 
   @override
   Widget build(BuildContext context) {
-    return PodVideoPlayer(controller: controller);
+    return PodVideoPlayer(
+
+        controller: controller);
   }
 }

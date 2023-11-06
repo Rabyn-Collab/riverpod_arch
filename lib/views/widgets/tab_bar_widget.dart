@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterspod/provider/movie_provider.dart';
 import 'package:flutterspod/views/detail_page.dart';
 import 'package:get/get.dart';
-
+import 'package:lottie/lottie.dart';
 
 
 class TabBarWidget extends ConsumerWidget{
@@ -17,7 +17,12 @@ class TabBarWidget extends ConsumerWidget{
     if(state.isLoad){
       return Center(child: CircularProgressIndicator());
     }else if(state.isError){
-      return Center(child: Text(state.errMessage));
+      return Column(
+        children: [
+          Lottie.asset('assets/json/ani.json'),
+          Center(child: Text(state.errMessage)),
+        ],
+      );
     }else{
       return Padding(
         padding: const EdgeInsets.all(5.0),

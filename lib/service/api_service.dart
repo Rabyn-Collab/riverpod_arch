@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterspod/constants/api.dart';
+import 'package:flutterspod/exception/api_exception.dart';
 import 'package:flutterspod/models/movie.dart';
 import 'package:flutterspod/models/video.dart';
 import 'package:flutterspod/shared/client_provider.dart';
@@ -27,7 +28,7 @@ Future<Either<String, List<Movie>>> getMovieByCategory({required String apiPath,
    return Right((response.data['results'] as List).map(
            (e) => Movie.fromJson(e)).toList());
   }on DioException catch(err){
-    return Left('${err.response}');
+    return Left(ApiError.errorCheck(err));
   }
 
 
@@ -51,7 +52,8 @@ Future<Either<String, List<Movie>>> getMovieByCategory({required String apiPath,
       }
 
     }on DioException catch(err){
-      return Left('${err.response}');
+
+      return Left(ApiError.errorCheck(err));
     }
 
 
@@ -70,7 +72,7 @@ Future<Either<String, List<Movie>>> getMovieByCategory({required String apiPath,
       }
 
     }on DioException catch(err){
-        throw '${err.response}';
+        throw Left(ApiError.errorCheck(err));
     }
 
   }
