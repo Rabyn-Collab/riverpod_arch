@@ -10,8 +10,9 @@ import 'package:get/get.dart';
 
 
 
-void main (){
-
+void main () async{
+ WidgetsFlutterBinding.ensureInitialized();
+ await Future.delayed(Duration(milliseconds: 500));
 runApp(ProviderScope(child: Home()));
 
 }

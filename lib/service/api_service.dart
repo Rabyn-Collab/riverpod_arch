@@ -22,7 +22,7 @@ Future<Either<String, List<Movie>>> getMovieByCategory({required String apiPath,
   try{
     final response = await dio.get(apiPath,
     queryParameters: {
-      'page': 1
+      'page': page
     },
     );
    return Right((response.data['results'] as List).map(

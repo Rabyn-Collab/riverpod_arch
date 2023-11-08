@@ -9,6 +9,7 @@ final emptyMovie = MovieState(
   errMessage: '',
   movies: [],
   page: 1,
+  isLoadMore: false
 );
 
 

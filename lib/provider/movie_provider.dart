@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutterspod/constants/api.dart';
 import 'package:flutterspod/models/movie_state.dart';
 import 'package:flutterspod/service/api_service.dart';
 
@@ -10,6 +9,7 @@ final emptyMovie = MovieState(
     errMessage: '',
     movies: [],
   page: 1,
+  isLoadMore: false
 );
 
 
@@ -26,7 +26,8 @@ class MovieProvider extends StateNotifier<MovieState>{
   }
 
   Future<void>  getMovieByCategory(String apiPath)async{
-    state = state.copyWith(isLoad: true, isError: false);
+    state = state.copyWith(isLoad: state.isLoadMore? false:  true, isError: false);
+
     final response = await service.getMovieByCategory(apiPath: apiPath, page: state.page);
     response.fold(
             (l) => state = state.copyWith(isError: true,isLoad: false, errMessage: l),
@@ -35,7 +36,7 @@ class MovieProvider extends StateNotifier<MovieState>{
   }
 
   Future<void>  loadMore(String apiPath)async{
-    state = state.copyWith(page: state.page + 1);
+    state = state.copyWith(page: state.page + 1, isLoadMore: true);
     getMovieByCategory(apiPath);
   }
 
