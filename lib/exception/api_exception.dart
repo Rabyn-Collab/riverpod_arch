@@ -8,7 +8,6 @@ static  String errorCheck(DioException error){
     switch(error.type){
       case DioExceptionType.connectionTimeout:
         return "please check your connection";
-
       case DioExceptionType.sendTimeout:
         return "Send timed out";
 

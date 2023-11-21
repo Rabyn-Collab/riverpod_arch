@@ -3,16 +3,28 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutterspod/views/auth/login_page.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 
 
-
+final data = {
+  'title': '90'
+};
 
 
 void main () async{
+  final g ='$data';
+
  WidgetsFlutterBinding.ensureInitialized();
  await Future.delayed(Duration(milliseconds: 500));
-runApp(ProviderScope(child: Home()));
+
+ await Hive.initFlutter();
+ final userBox = await Hive.openBox<String?>('userBox');
+
+runApp(
+    ProviderScope(
+    child: Home()
+));
 
 }
 
