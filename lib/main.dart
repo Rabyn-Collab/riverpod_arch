@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutterspod/views/auth/login_page.dart';
 import 'package:get/get.dart';
 
 
@@ -44,7 +45,7 @@ class Home extends StatelessWidget {
              )
            )
          ),
-
+      home: LoginPage(),
       ),
     );
   }

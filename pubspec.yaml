@@ -37,19 +37,24 @@ dependencies:
   cupertino_icons: ^1.0.2
   get: ^4.6.6
   flutter_screenutil: ^5.9.0
-  flutter_riverpod: ^2.4.3
+  flutter_riverpod: ^2.4.6
   intl: ^0.18.1
   dio: ^5.3.3
   skeletonizer: ^0.8.0
   cached_network_image: ^3.3.0
   flutter_spinkit: ^5.2.0
   dartz: ^0.10.1
-  fluttertoast: ^8.2.2
+  fluttertoast: ^8.2.4
   pod_player: ^0.2.1
   flutter_cors: ^1.5.0
   lottie: ^2.7.0
   flutter_offline: ^3.0.0
   flutter_native_splash: ^2.3.5
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  riverpod_annotation: ^2.3.1
+  flutter_form_builder: ^9.1.1
+  form_builder_validators: ^9.1.0
 
 flutter_native_splash:
   color: "#42a5f5"
@@ -78,6 +83,9 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: "^0.13.1"
+  hive_generator: ^2.0.1
+  build_runner: ^2.4.6
+  riverpod_generator: ^2.3.6
 
 flutter_launcher_icons:
   android: "launcher_icon"
