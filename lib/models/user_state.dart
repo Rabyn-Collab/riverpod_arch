@@ -1,26 +1,30 @@
 
-
-
-
-
-
 import 'package:flutterspod/models/user.dart';
-
-class UserState{
-  final String errMsg;
-  final bool isSuccess;
-  final bool isError;
-  final bool isLoading;
-  final User user;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 
-  UserState({
-    required this.user,
-    required this.isLoading,
-    required this.isSuccess,
-    required this.isError,
-    required this.errMsg
-});
+part 'user_state.freezed.dart';
+
+@freezed
+class UserState with _$UserState{
+
+ const factory UserState({
+    User?  user,
+    required bool isLoading,
+    required bool isSuccess,
+    required bool isError,
+    required String errMsg
+}) = _UserState;
+
+  factory UserState.empty(){
+    return UserState(
+        user: null,
+        isLoading: false,
+        isSuccess: false,
+        isError: false,
+        errMsg: ''
+    );
+  }
 
 
 

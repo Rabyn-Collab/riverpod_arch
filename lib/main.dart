@@ -7,13 +7,9 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 
 
-final data = {
-  'title': '90'
-};
-
 
 void main () async{
-  final g ='$data';
+
 
  WidgetsFlutterBinding.ensureInitialized();
  await Future.delayed(Duration(milliseconds: 500));
