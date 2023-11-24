@@ -10,7 +10,7 @@ class User with _$User{
  const factory User({
     required String token,
     required String email,
-    required String isAdmin,
+    required bool isAdmin,
     required Shipping shippingAddress
   }) = _User;
 

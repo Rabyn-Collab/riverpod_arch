@@ -22,7 +22,7 @@ User _$UserFromJson(Map<String, dynamic> json) {
 mixin _$User {
   String get token => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
-  String get isAdmin => throw _privateConstructorUsedError;
+  bool get isAdmin => throw _privateConstructorUsedError;
   Shipping get shippingAddress => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -36,7 +36,7 @@ abstract class $UserCopyWith<$Res> {
       _$UserCopyWithImpl<$Res, User>;
   @useResult
   $Res call(
-      {String token, String email, String isAdmin, Shipping shippingAddress});
+      {String token, String email, bool isAdmin, Shipping shippingAddress});
 
   $ShippingCopyWith<$Res> get shippingAddress;
 }
@@ -71,7 +71,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
       isAdmin: null == isAdmin
           ? _value.isAdmin
           : isAdmin // ignore: cast_nullable_to_non_nullable
-              as String,
+              as bool,
       shippingAddress: null == shippingAddress
           ? _value.shippingAddress
           : shippingAddress // ignore: cast_nullable_to_non_nullable
@@ -96,7 +96,7 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String token, String email, String isAdmin, Shipping shippingAddress});
+      {String token, String email, bool isAdmin, Shipping shippingAddress});
 
   @override
   $ShippingCopyWith<$Res> get shippingAddress;
@@ -129,7 +129,7 @@ class __$$UserImplCopyWithImpl<$Res>
       isAdmin: null == isAdmin
           ? _value.isAdmin
           : isAdmin // ignore: cast_nullable_to_non_nullable
-              as String,
+              as bool,
       shippingAddress: null == shippingAddress
           ? _value.shippingAddress
           : shippingAddress // ignore: cast_nullable_to_non_nullable
@@ -155,7 +155,7 @@ class _$UserImpl implements _User {
   @override
   final String email;
   @override
-  final String isAdmin;
+  final bool isAdmin;
   @override
   final Shipping shippingAddress;
 
@@ -199,7 +199,7 @@ abstract class _User implements User {
   const factory _User(
       {required final String token,
       required final String email,
-      required final String isAdmin,
+      required final bool isAdmin,
       required final Shipping shippingAddress}) = _$UserImpl;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
@@ -209,7 +209,7 @@ abstract class _User implements User {
   @override
   String get email;
   @override
-  String get isAdmin;
+  bool get isAdmin;
   @override
   Shipping get shippingAddress;
   @override

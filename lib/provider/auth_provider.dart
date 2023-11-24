@@ -1,12 +1,19 @@
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutterspod/main.dart';
 import 'package:flutterspod/models/user_state.dart';
 import 'package:flutterspod/service/auth_service.dart';
 
 
 
-final authProvider = StateProvider((ref) => AuthProvider(
-    UserState.empty(), ref.watch(authService)));
+final authProvider = StateNotifierProvider<AuthProvider, UserState>((ref) => AuthProvider(
+    UserState(
+      isSuccess: false,
+      errMsg: '',
+      isError: false,
+      isLoading: false,
+      user: ref.watch(boxA)
+    ), ref.watch(authService)));
 
 
 class AuthProvider extends StateNotifier<UserState>{

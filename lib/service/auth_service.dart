@@ -21,11 +21,12 @@ class AuthService{
    Future<Either<String, User>>  userLogin ({required Map<String, dynamic> data}) async{
     try{
       final response = await dio.post(Api.userLogin, data: data);
-      final box  = Hive.box<String?>('userBox');
+      final box  = Hive.box('userBox');
        box.put('user', jsonEncode(response.data));
-      return Right(response.data);
+      return Right(User.fromJson(response.data));
     }on DioException catch (err){
-      return Left(ApiError.errorCheck(err));
+      print(err.response);
+        return Left(ApiError.errorCheck(err));
     }on HiveError catch(err){
       return Left(err.message);
     }

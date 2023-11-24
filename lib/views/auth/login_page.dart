@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterspod/constants/app_sizes.dart';
+import 'package:flutterspod/provider/auth_provider.dart';
 import 'package:flutterspod/shared/other_provider.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -63,7 +64,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   onPressed: () {
                     FocusScope.of(context).unfocus();
                    if(_formKey.currentState!.saveAndValidate()){
-                     print(_formKey.currentState!.value);
+                     ref.read(authProvider.notifier).userLogin(data: _formKey.currentState!.value);
                    }else{
                    ref.read(modeProvider.notifier).state = AutovalidateMode.onUserInteraction;
                    }

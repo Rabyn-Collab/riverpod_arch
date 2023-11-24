@@ -9,7 +9,7 @@ part of 'user.dart';
 _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
       token: json['token'] as String,
       email: json['email'] as String,
-      isAdmin: json['isAdmin'] as String,
+      isAdmin: json['isAdmin'] as bool,
       shippingAddress:
           Shipping.fromJson(json['shippingAddress'] as Map<String, dynamic>),
     );

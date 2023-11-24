@@ -1,11 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutterspod/views/auth/login_page.dart';
+import 'package:flutterspod/models/user.dart';
+import 'package:flutterspod/views/status_page.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 
+final boxA = Provider<User?>((ref) => null);
 
 
 void main () async{
@@ -15,10 +19,15 @@ void main () async{
  await Future.delayed(Duration(milliseconds: 500));
 
  await Hive.initFlutter();
- final userBox = await Hive.openBox<String?>('userBox');
+ final userBox = await Hive.openBox('userBox');
+
+ final user = userBox.get('user');
 
 runApp(
     ProviderScope(
+    overrides: [
+       boxA.overrideWithValue(user == null ? null: User.fromJson(jsonDecode(user))),
+    ],
     child: Home()
 ));
 
@@ -53,7 +62,7 @@ class Home extends StatelessWidget {
              )
            )
          ),
-      home: LoginPage(),
+      home: StatusPage(),
       ),
     );
   }
