@@ -25,11 +25,21 @@ class AuthService{
        box.put('user', jsonEncode(response.data));
       return Right(User.fromJson(response.data));
     }on DioException catch (err){
-      print(err.response);
         return Left(ApiError.errorCheck(err));
     }on HiveError catch(err){
       return Left(err.message);
     }
   }
+
+  Either<String, bool>  userLogOut () {
+    try{
+      final box  = Hive.box('userBox');
+      box.delete('user');
+      return Right(true);
+    }on HiveError catch(err){
+      return Left(err.message);
+    }
+  }
+
 
 }

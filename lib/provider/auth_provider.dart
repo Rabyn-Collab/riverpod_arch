@@ -32,5 +32,13 @@ class AuthProvider extends StateNotifier<UserState>{
       });
   }
 
+  void  userLogOut () {
+  final response = service.userLogOut();
+     response.fold((l) {
+     state = state.copyWith(isLoading: false, isError: true,isSuccess: false, errMsg: l);
+    }, (r) {
+      state = state.copyWith(isLoading: false, isError: false,isSuccess: true,user: null);
+    });
+  }
 
 }

@@ -26,7 +26,7 @@ static  String errorCheck(DioException error){
             return  "Permission denied";
 
           case 404:
-            return  "Page not Found";
+            return  "${error.response}";
 
           case 405:
             return  "Method not Allowed";

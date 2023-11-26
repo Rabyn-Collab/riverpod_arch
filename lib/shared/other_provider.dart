@@ -1,9 +1,29 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/material.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 
+part 'other_provider.g.dart';
 
 
+@riverpod
+class Mode extends _$Mode {
+  @override
+  AutovalidateMode build() => AutovalidateMode.disabled;
+
+  void change() => AutovalidateMode.onUserInteraction;
+
+}
 
 
-final modeProvider = StateProvider<AutovalidateMode>((ref) => AutovalidateMode.disabled);
+@riverpod
+class Toggle extends _$Toggle {
+
+  @override
+  bool build() => false;
+
+
+  void change() {
+    state = !state;
+  }
+
+}
