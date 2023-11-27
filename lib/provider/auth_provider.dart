@@ -32,6 +32,16 @@ class AuthProvider extends StateNotifier<UserState>{
       });
   }
 
+  Future<void>  userRegister ({required Map<String, dynamic> data}) async{
+    state = state.copyWith(isError: false, isSuccess: false, isLoading: true);
+    final response = await service.userRegister(data: data);
+    response.fold((l) {
+      state = state.copyWith(isLoading: false, isError: true,isSuccess: false, errMsg: l);
+    }, (r) {
+      state = state.copyWith(isLoading: false, isError: false,isSuccess: r);
+    });
+  }
+
   void  userLogOut () {
   final response = service.userLogOut();
      response.fold((l) {

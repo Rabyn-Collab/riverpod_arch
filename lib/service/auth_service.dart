@@ -31,6 +31,18 @@ class AuthService{
     }
   }
 
+
+
+  Future<Either<String, bool>>  userRegister ({required Map<String, dynamic> data}) async{
+    try{
+      final response = await dio.post(Api.userRegister, data: data);
+
+      return Right(true);
+    }on DioException catch (err){
+      return Left(ApiError.errorCheck(err));
+    }
+  }
+
   Either<String, bool>  userLogOut () {
     try{
       final box  = Hive.box('userBox');

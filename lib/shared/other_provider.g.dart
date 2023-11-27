@@ -6,7 +6,7 @@ part of 'other_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$modeHash() => r'526f8e4be4807595ae877c08ff249101b33744fc';
+String _$modeHash() => r'f188e0e5cbcdcad8239081412a64a2d92d01fd78';
 
 /// See also [Mode].
 @ProviderFor(Mode)
@@ -21,7 +21,7 @@ final modeProvider =
 );
 
 typedef _$Mode = AutoDisposeNotifier<AutovalidateMode>;
-String _$toggleHash() => r'd34bf7bcf3dc237473bf31957c4686d8343b7429';
+String _$toggleHash() => r'496cd6ceb80b12d8be419a2ca61257864642c621';
 
 /// See also [Toggle].
 @ProviderFor(Toggle)

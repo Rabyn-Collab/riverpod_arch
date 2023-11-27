@@ -4,8 +4,10 @@ import 'package:flutterspod/common_widgets/toast_widget.dart';
 import 'package:flutterspod/constants/app_sizes.dart';
 import 'package:flutterspod/provider/auth_provider.dart';
 import 'package:flutterspod/shared/other_provider.dart';
+import 'package:flutterspod/views/auth/sign_up_page.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:get/get.dart';
 
 
 class LoginPage extends ConsumerStatefulWidget {
@@ -17,11 +19,16 @@ class LoginPage extends ConsumerStatefulWidget {
 
 class _LoginPageState extends ConsumerState<LoginPage> {
 
+  final mailController = TextEditingController();
+  final passController = TextEditingController();
   final _formKey = GlobalKey<FormBuilderState>();
 
   @override
   Widget build(BuildContext context) {
-    final mode = ref.watch(modeProvider);
+
+
+
+
    ref.listen(authProvider, (previous, next) {
        if(next.isError){
          Toasts.showError(message: next.errMsg);
@@ -29,6 +36,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
          Toasts.showSuccess(message: 'successfully login');
        }
    });
+   final mode = ref.watch(modeProvider);
 
     final auth = ref.watch(authProvider);
    final toggle = ref.watch(toggleProvider);
@@ -48,6 +56,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               child: ListView(
                 children: [
                   FormBuilderTextField(
+                    controller: mailController,
                     textInputAction: TextInputAction.next,
                     name: 'email',
                     decoration: const InputDecoration(
@@ -62,6 +71,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   AppSizes.gapH10,
                   AppSizes.gapH10,
                   FormBuilderTextField(
+                    controller: passController,
                     textInputAction: TextInputAction.done,
                     name: 'password',
                     decoration:  InputDecoration(
@@ -91,6 +101,19 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
                     },
                     child: auth.isLoading ? Center(child: CircularProgressIndicator()): const Text('Login'),
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Don\'t have an account'),
+                      TextButton(onPressed: (){
+                        FocusScope.of(context).unfocus();
+                        mailController.clearComposing();
+                       // _formKey.currentState!.deactivate();
+                        Get.to(() => SignUpPage(), transition: Transition.leftToRight);
+                      }, child: Text('Sign Up'))
+                    ],
                   )
                 ],
               ),
