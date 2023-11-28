@@ -4,7 +4,7 @@
 
 
 class Api{
-  static const baseUrl = 'http://192.168.0.101:5000/api';
+  static const baseUrl = 'http://192.168.0.102:5000/api';
 
 
   /// auth apis
@@ -13,5 +13,6 @@ class Api{
 
 /// product apis
   static const getProducts = '$baseUrl/products';
+  static const addProduct = '$baseUrl/create-product';
 
 }
