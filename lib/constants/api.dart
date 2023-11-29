@@ -9,7 +9,7 @@ class Api{
 
   /// auth apis
   static const userLogin = '$baseUrl/userLogin';
-  static const userRegister = '$baseUrl/userSignUp';
+  static const userRegister = '$baseUrl/userRegister';
 
 /// product apis
   static const getProducts = '$baseUrl/products';

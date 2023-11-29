@@ -35,5 +35,19 @@ final toggleProvider = AutoDisposeNotifierProvider<Toggle, bool>.internal(
 );
 
 typedef _$Toggle = AutoDisposeNotifier<bool>;
+String _$photoHash() => r'4b5136a7ca5d1aabc16f2b588f803c94224d0187';
+
+/// See also [Photo].
+@ProviderFor(Photo)
+final photoProvider = AutoDisposeNotifierProvider<Photo, XFile?>.internal(
+  Photo.new,
+  name: r'photoProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$photoHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$Photo = AutoDisposeNotifier<XFile?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

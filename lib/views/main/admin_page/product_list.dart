@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterspod/provider/product_provider.dart';
+import 'package:flutterspod/views/main/admin_page/add_form.dart';
+import 'package:get/get.dart';
 
 
 
@@ -15,7 +17,9 @@ class ProductList extends ConsumerWidget{
         appBar: AppBar(
           title: Text('Product Lists'),
           actions: [
-            IconButton(onPressed: (){}, icon: Icon(Icons.add))
+            IconButton(onPressed: (){
+              Get.to(() => AddForm(), transition:  Transition.leftToRight);
+            }, icon: Icon(Icons.add))
           ],
         ),
 

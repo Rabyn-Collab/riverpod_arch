@@ -55,12 +55,12 @@ class Home extends StatelessWidget {
            appBarTheme: AppBarTheme(
 
            ),
-           textTheme: TextTheme(
-             titleMedium: TextStyle(
-               fontSize: 30,
-               fontWeight: FontWeight.w500
-             )
-           )
+           // textTheme: TextTheme(
+           //   titleMedium: TextStyle(
+           //     fontSize: 30,
+           //     fontWeight: FontWeight.w500
+           //   )
+           // )
          ),
       home: StatusPage(),
       ),

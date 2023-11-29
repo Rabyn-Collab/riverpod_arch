@@ -2,6 +2,8 @@
 
 
 
+import 'package:flutterspod/constants/api.dart';
+
 class Product{
 
   final String id;
@@ -40,7 +42,7 @@ class Product{
         countInStock: json['countInStock'],
         numReviews: json['numReviews'],
         product_detail: json['product_detail'],
-        product_image: json['product_image'],
+        product_image: '${Api.baseUrl}${json['product_image']}',
         product_name: json['product_name'],
         product_price: json['product_price'],
         reviews: json['reviews']
