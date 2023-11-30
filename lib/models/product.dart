@@ -10,7 +10,7 @@ class Product{
   final String product_name;
   final String product_detail;
   final int product_price;
-  final int rating;
+  final String rating;
   final  int numReviews;
   final String product_image;
     final String brand;
@@ -35,7 +35,7 @@ class Product{
 
   factory Product.fromJson(Map<String, dynamic> json){
     return Product(
-        rating: json['rating'],
+        rating: json['rating'].toString(),
         id: json['_id'],
         brand: json['brand'],
         category: json['category'],

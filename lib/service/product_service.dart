@@ -25,27 +25,26 @@ class ProductService{
 
 
   Future<Either<String, bool>>  addProduct ({
-   required String product_name,
-    required String product_detail,
-   required int product_price,
-   required XFile product_image,
-   required String  brand,
-    required String category,
-    required int countInStock,
+   required Map<String, dynamic> data,required XFile image
     }) async{
 
     try{
-      final formData = FormData.fromMap({
-        'product_name': product_name,
-        'product_detail': product_detail,
-        'brand': brand,
-        'category': category,
-        'countInStock': countInStock,
-        'product_price': product_price,
-        'product_image': await MultipartFile.fromFile(product_image.path, filename: product_image.name),
-      });
 
-      final response = await auth_dio.post(Api.addProduct, data: product_image);
+      final formData = FormData.fromMap({
+        for(final m in data.entries) m.key: m.value,
+        'product_image': await MultipartFile.fromFile(image.path, filename: image.name),
+      });
+      // final formData = FormData.fromMap({
+      //   'product_name': product_name,
+      //   'product_detail': product_detail,
+      //   'brand': brand,
+      //   'category': category,
+      //   'countInStock': countInStock,
+      //   'product_price': product_price,
+      //   'product_image': await MultipartFile.fromFile(product_image.path, filename: product_image.name),
+      // });
+
+      final response = await auth_dio.post(Api.addProduct, data: formData);
       return Right(true);
     }on DioException catch (err){
        return  Left(ApiError.errorCheck(err));

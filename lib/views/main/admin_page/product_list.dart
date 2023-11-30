@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterspod/provider/product_provider.dart';
 import 'package:flutterspod/views/main/admin_page/add_form.dart';
+import 'package:flutterspod/views/main/admin_page/edit_form.dart';
 import 'package:get/get.dart';
 
 
@@ -46,7 +47,9 @@ class ProductList extends ConsumerWidget{
                           width: 100,
                           child: Row(
                             children: [
-                              IconButton(onPressed: (){}, icon: Icon(Icons.edit)),
+                              IconButton(onPressed: (){
+                                Get.to(() => EditForm(product: product));
+                              }, icon: Icon(Icons.edit)),
                               IconButton(onPressed: (){}, icon: Icon(Icons.delete)),
                             ],
                           ),
