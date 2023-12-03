@@ -38,7 +38,7 @@ class _AddFormState extends ConsumerState<AddForm> {
     });
 
     final state = ref.watch(productNotifier);
-    final toggle = ref.watch(toggleProvider);
+
     final image = ref.watch(photoProvider);
 
     return PopScope(

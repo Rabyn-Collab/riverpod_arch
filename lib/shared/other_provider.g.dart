@@ -35,7 +35,7 @@ final toggleProvider = AutoDisposeNotifierProvider<Toggle, bool>.internal(
 );
 
 typedef _$Toggle = AutoDisposeNotifier<bool>;
-String _$photoHash() => r'4b5136a7ca5d1aabc16f2b588f803c94224d0187';
+String _$photoHash() => r'bd2af284d86b2c3cde9118286ff154098ee56c8b';
 
 /// See also [Photo].
 @ProviderFor(Photo)

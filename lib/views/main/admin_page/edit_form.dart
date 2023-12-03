@@ -31,13 +31,14 @@ class _EditFormState extends ConsumerState<EditForm> {
       if(next.isError){
         Toasts.showError(message: next.errMsg);
       }else if(next.isSuccess){
+        ref.invalidate(productProvider);
         Get.back();
-        Toasts.showSuccess(message: 'successfully register');
+        Toasts.showSuccess(message: 'successfully updated');
       }
     });
 
     final state = ref.watch(productNotifier);
-    final toggle = ref.watch(toggleProvider);
+
     final image = ref.watch(photoProvider);
 
     return PopScope(
@@ -89,11 +90,14 @@ class _EditFormState extends ConsumerState<EditForm> {
                     FocusScope.of(context).unfocus();
                     if(_formKey.currentState!.saveAndValidate()){
                       if(image == null){
-                        Toasts.showError(message: 'please select an image');
+                      ref.read(productNotifier.notifier).updateProduct(
+                          id: widget.product.id,
+                          data: _formKey.currentState!.value);
                       }else{
-
-                        print(_formKey.currentState!.value);
-
+                        ref.read(productNotifier.notifier).updateProduct(
+                            id: widget.product.id,
+                            data: _formKey.currentState!.value,
+                            image: image, imagePath: widget.product.product_image);
                       }
 
                     }else{

@@ -34,15 +34,6 @@ class ProductService{
         for(final m in data.entries) m.key: m.value,
         'product_image': await MultipartFile.fromFile(image.path, filename: image.name),
       });
-      // final formData = FormData.fromMap({
-      //   'product_name': product_name,
-      //   'product_detail': product_detail,
-      //   'brand': brand,
-      //   'category': category,
-      //   'countInStock': countInStock,
-      //   'product_price': product_price,
-      //   'product_image': await MultipartFile.fromFile(product_image.path, filename: product_image.name),
-      // });
 
       final response = await auth_dio.post(Api.addProduct, data: formData);
       return Right(true);
@@ -53,8 +44,47 @@ class ProductService{
 
 
 
+  Future<Either<String, bool>>  updateProduct ({
+    required Map<String, dynamic> data,
+    XFile? image,
+    String? imagePath,
+    required String id
+  }) async{
+
+    try{
+       if(image == null){
+         final response = await auth_dio.patch('${Api.upDateProduct}/$id', data: data);
+       }else{
+         final formData = FormData.fromMap({
+           for(final m in data.entries) m.key: m.value,
+           'product_image': await MultipartFile.fromFile(image.path, filename: image.name),
+           'imagePath': imagePath
+         });
+         final response = await auth_dio.patch('${Api.upDateProduct}/$id', data: formData);
+       }
+
+      return Right(true);
+    }on DioException catch (err){
+      print(err);
+      return  Left(ApiError.errorCheck(err));
+    }
+  }
 
 
+
+
+
+  Future<Either<String, bool>>  removeProduct ({
+    required String id
+  }) async{
+    try{
+        final response = await auth_dio.delete('${Api.commonProduct}/$id');
+      return Right(true);
+    }on DioException catch (err){
+      print(err);
+      return  Left(ApiError.errorCheck(err));
+    }
+  }
 
 
 }

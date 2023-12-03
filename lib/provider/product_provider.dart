@@ -45,4 +45,40 @@ class ProductNotifier extends StateNotifier<CrudState>{
   }
 
 
+
+  Future<void>  updateProduct ({
+    required Map<String, dynamic> data,
+    XFile? image,
+    String? imagePath,
+    required String id
+  }) async{
+    state = state.copyWith(isError: false, isSuccess: false, isLoading: true);
+    final response = await service.updateProduct(
+        id: id,
+        data: data, image: image, imagePath: imagePath);
+    response.fold((l) {
+      state = state.copyWith(isLoading: false, isError: true,isSuccess: false, errMsg: l);
+    }, (r) {
+      state = state.copyWith(isLoading: false, isError: false,isSuccess: true);
+    });
+
+  }
+
+
+  Future<void>  removeProduct ({
+    required String id
+  }) async{
+    state = state.copyWith(isError: false, isSuccess: false, isLoading: true);
+    final response = await service.removeProduct(id: id);
+    response.fold((l) {
+      state = state.copyWith(isLoading: false, isError: true,isSuccess: false, errMsg: l);
+    }, (r) {
+      state = state.copyWith(isLoading: false, isError: false,isSuccess: true);
+    });
+
+  }
+  
+  
+  
+
   }
