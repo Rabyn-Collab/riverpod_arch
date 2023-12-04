@@ -28,7 +28,7 @@ class CartProvider extends Notifier<List<CartItem>>{
    if(state.isEmpty){
     Hive.box<CartItem>('cartBox').add(newsCart);
     state = [...state, newsCart];
-    Toasts.showSuccess(message: 'successfully added');
+    Toasts.showCartSuccess(message: 'successfully added', context: context);
    }else{
       final isExist = state.firstWhere((element) => element.product == product.id, orElse: (){
        return CartItem.empty();
@@ -36,9 +36,9 @@ class CartProvider extends Notifier<List<CartItem>>{
       if(isExist.name == 'no-data'){
        Hive.box<CartItem>('cartBox').add(newsCart);
        state = [...state, newsCart];
-       Toasts.showSuccess(message: 'successfully added');
+       Toasts.showCartSuccess(message: 'successfully added', context: context);
       }else{
-       Toasts.showError(message: 'product already added');
+       Toasts.showCartError(message: 'product already added', context: context);
       }
    }
   }
@@ -65,6 +65,7 @@ class CartProvider extends Notifier<List<CartItem>>{
 
   void singleRemove(CartItem cartItem){
    state.remove(cartItem);
+     cartItem.delete();
    state = [...state];
   }
 

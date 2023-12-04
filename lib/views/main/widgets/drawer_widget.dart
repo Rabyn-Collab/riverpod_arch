@@ -18,8 +18,7 @@ class DrawerWidget extends StatelessWidget{
       child: ListView(
         children: [
            AppSizes.gapH14,
-        //  if(state.user?.isAdmin == true)
-            ListTile(
+          if(state.user?.isAdmin == true)ListTile(
             onTap: (){
               Get.back();
               Get.to(() => ProductList(), transition:  Transition.leftToRight);
