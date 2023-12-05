@@ -16,6 +16,7 @@ final authService = Provider((ref) => AuthService(ref.watch(clientProvider)));
 class AuthService{
 
   final Dio dio;
+
   AuthService(this.dio);
 
    Future<Either<String, User>>  userLogin ({required Map<String, dynamic> data}) async{
@@ -27,6 +28,34 @@ class AuthService{
     }on DioException catch (err){
       print(err);
         return Left(ApiError.errorCheck(err));
+    }on HiveError catch(err){
+      return Left(err.message);
+    }
+  }
+
+
+  Future<Either<String, User>>  addressUpdate ({required Map<String, dynamic> data, required String token}) async{
+     final map = {
+       for(final m in data.entries) m.key: m.value,
+       'isEmpty': false
+     };
+    try{
+      final response = await dio.patch(Api.userUpdate, data: {
+        'shippingAddress': map
+      },
+      options:  Options(
+          headers: {
+            'Authorization': token
+          }
+      ),
+
+      );
+      final box  = Hive.box('userBox');
+      box.put('user', jsonEncode(response.data));
+      return Right(User.fromJson(response.data));
+    }on DioException catch (err){
+      print(err);
+      return Left(ApiError.errorCheck(err));
     }on HiveError catch(err){
       return Left(err.message);
     }

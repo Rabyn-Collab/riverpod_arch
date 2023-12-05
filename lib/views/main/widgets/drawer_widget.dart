@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterspod/constants/app_sizes.dart';
 import 'package:flutterspod/provider/auth_provider.dart';
+import 'package:flutterspod/provider/cart_provider.dart';
 import 'package:flutterspod/views/main/admin_page/product_list.dart';
 import 'package:get/get.dart';
 
@@ -29,6 +30,7 @@ class DrawerWidget extends StatelessWidget{
           ListTile(
             onTap: (){
               ref.read(authProvider.notifier).userLogOut();
+              ref.read(cartProvider.notifier).clearAll();
             },
             leading: Icon(Icons.exit_to_app),
             title: Text('userLogOut'),

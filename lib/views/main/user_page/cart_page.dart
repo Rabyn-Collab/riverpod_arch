@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterspod/constants/app_sizes.dart';
+import 'package:flutterspod/provider/auth_provider.dart';
 import 'package:flutterspod/provider/cart_provider.dart';
+import 'package:flutterspod/views/main/user_page/order_page.dart';
+import 'package:flutterspod/views/main/user_page/shipping_page.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
 
@@ -13,6 +17,7 @@ class CartPage extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
     final cartItems = ref.watch(cartProvider);
     final total = ref.watch(cartProvider.notifier).total;
+    final auth = ref.watch(authProvider);
     return Scaffold(
         body: SafeArea(
           child: Padding(
@@ -86,7 +91,11 @@ class CartPage extends ConsumerWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: ElevatedButton(onPressed: (){
-                    ref.read(cartProvider.notifier).clearAll();
+                    if(auth.user?.shippingAddress.isEmpty == true){
+                      Get.to(() => ShippingPage(), transition:  Transition.leftToRight);
+                    }else{
+                      Get.to(() => OrderPage(), transition:  Transition.leftToRight);
+                    }
                   }, child: Text('place an order')),
                 ),
               ],

@@ -32,6 +32,18 @@ class AuthProvider extends StateNotifier<UserState>{
       });
   }
 
+
+  Future<void>  addressUpdate ({required Map<String, dynamic> data, required String token}) async{
+    state = state.copyWith(isError: false, isSuccess: false, isLoading: true);
+    final response = await service.addressUpdate(data: data, token: token);
+    response.fold((l) {
+      state = state.copyWith(isLoading: false, isError: true,isSuccess: false, errMsg: l);
+    }, (r) {
+      state = state.copyWith(isLoading: false, isError: false,isSuccess: true,user: r);
+    });
+  }
+
+
   Future<void>  userRegister ({required Map<String, dynamic> data}) async{
     state = state.copyWith(isError: false, isSuccess: false, isLoading: true);
     final response = await service.userRegister(data: data);
