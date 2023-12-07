@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutterspod/provider/product_provider.dart';
-import 'package:flutterspod/service/product_service.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -21,13 +19,12 @@ class Mode extends _$Mode {
 @riverpod
 class Toggle extends _$Toggle {
 
-  ProductService  get produtS => ref.read(productServiceProvider);
   @override
   bool build() => false;
 
 
   void change() {
-    produtS.getProducts();
+
     state = !state;
   }
 

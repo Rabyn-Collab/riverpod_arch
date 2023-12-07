@@ -28,7 +28,7 @@ class OrderData with _$OrderData{
    required int  qty,
    required String image,
    required int  price,
-   required String product;
+   required String product
   }) = _OrderData;
 
   factory OrderData.fromJson(Map<String, Object?> json) => _$OrderDataFromJson(json);

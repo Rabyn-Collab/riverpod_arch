@@ -1,10 +1,8 @@
 import 'package:dio/dio.dart';
-
 import 'package:flutterspod/constants/api.dart';
 import 'package:flutterspod/exception/api_exception.dart';
-import 'package:flutterspod/models/product.dart';
+import 'package:flutterspod/models/order_item.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:image_picker/image_picker.dart';
 
 
 
@@ -17,7 +15,7 @@ class OrderService{
   Future<List<OrderItem>>  getAllOrders () async{
     try{
       final response = await auth_dio.get(Api.getAllOrders);
-      return (response.data as List).map((e) => Product.fromJson(e)).toList();
+      return (response.data as List).map((e) => OrderItem.fromJson(e)).toList();
     }on DioException catch (err){
       throw ApiError.errorCheck(err);
     }
@@ -25,7 +23,7 @@ class OrderService{
 
 
   Future<Either<String, bool>>  addOrder ({
-   required List<Map> orderItems,
+   required List<Map<String, dynamic>> orderItems,
    required int totalPrice,
   }) async{
 
@@ -43,13 +41,13 @@ class OrderService{
 
 
 
-  Future<Either<String, List<OrderItem>>>  getOrderUser () async{
+  Future<List<OrderItem>>  getOrderUser () async{
 
     try{
       final response = await auth_dio.get(Api.orderByUser);
-      return Right(true);
+      return (response.data as List).map((e) => OrderItem.fromJson(e)).toList();
     }on DioException catch (err){
-      return  Left(ApiError.errorCheck(err));
+      throw ApiError.errorCheck(err);
     }
   }
 
