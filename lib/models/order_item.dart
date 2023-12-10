@@ -10,6 +10,7 @@ class OrderItem with _$OrderItem{
   const factory OrderItem({
     required List<OrderData> orderItems,
     required int totalPrice,
+    required String createdAt
   }) = _OrderItem;
 
   factory OrderItem.fromJson(Map<String, Object?> json) => _$OrderItemFromJson(json);
@@ -28,7 +29,8 @@ class OrderData with _$OrderData{
    required int  qty,
    required String image,
    required int  price,
-   required String product
+   required String product,
+
   }) = _OrderData;
 
   factory OrderData.fromJson(Map<String, Object?> json) => _$OrderDataFromJson(json);

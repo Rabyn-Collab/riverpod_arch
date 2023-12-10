@@ -20,11 +20,11 @@ final clientProvider = Provider<Dio>.internal(
 );
 
 typedef ClientRef = ProviderRef<Dio>;
-String _$authClientHash() => r'633b260960125e8c28be3ddf07a946cd80c0b9a7';
+String _$authClientHash() => r'27647eb8cc9ed9e69e4052355a6040578dabce37';
 
 /// See also [authClient].
 @ProviderFor(authClient)
-final authClientProvider = Provider<Dio>.internal(
+final authClientProvider = AutoDisposeProvider<Dio>.internal(
   authClient,
   name: r'authClientProvider',
   debugGetCreateSourceHash:
@@ -33,6 +33,6 @@ final authClientProvider = Provider<Dio>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef AuthClientRef = ProviderRef<Dio>;
+typedef AuthClientRef = AutoDisposeProviderRef<Dio>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

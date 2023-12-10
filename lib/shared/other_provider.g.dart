@@ -21,7 +21,7 @@ final modeProvider =
 );
 
 typedef _$Mode = AutoDisposeNotifier<AutovalidateMode>;
-String _$toggleHash() => r'496cd6ceb80b12d8be419a2ca61257864642c621';
+String _$toggleHash() => r'de78742818d330aee5ee7140441af00ca6b683e3';
 
 /// See also [Toggle].
 @ProviderFor(Toggle)

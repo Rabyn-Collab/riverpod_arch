@@ -3,6 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterspod/common_widgets/toast_widget.dart';
 import 'package:flutterspod/constants/app_sizes.dart';
 import 'package:flutterspod/provider/auth_provider.dart';
+import 'package:flutterspod/provider/user_notifier.dart';
+import 'package:flutterspod/provider/user_notifier.dart';
+import 'package:flutterspod/provider/user_notifier.dart';
 import 'package:flutterspod/shared/other_provider.dart';
 import 'package:flutterspod/views/auth/sign_up_page.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -14,18 +17,37 @@ import 'package:get/get.dart';
 
 
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends ConsumerStatefulWidget{
   const LoginPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  ConsumerState<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends ConsumerState<LoginPage> {
   final _formKey = GlobalKey<FormBuilderState>();
+
+
+
+  void dispose1(){
+    ref.listenManual(authProvider, (previous, next) { }).close();
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
+
+    final auth = ref.watch(authProvider);
+  ref.listen(authProvider, (previous, next) {
+      if(next.isError && !next.isLoading){
+       // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('healksjdlskajsdasadlkj')));
+         Toasts.showError(message: next.errMsg);
+      }else if(next.isSuccess){
+        Toasts.showSuccess(message: 'successfully login');
+      }
+    });
+
 
     return Scaffold(
       body: SafeArea(
@@ -42,17 +64,7 @@ class _LoginPageState extends State<LoginPage> {
                  AppSizes.gapH10,
                  AppSizes.gapH10,
                  AppSizes.gapH10,
-                  Consumer(
-                    builder: (context, ref, child) {
-                      ref.listen(authProvider, (previous, next) {
-                        if(next.isError){
-                          Toasts.showError(message: next.errMsg);
-                        }else if(next.isSuccess){
-                          Toasts.showSuccess(message: 'successfully login');
-                        }
-                      });
-                      final auth = ref.watch(authProvider);
-                      return ElevatedButton(
+                  ElevatedButton(
                         onPressed: auth.isLoading ? null : () {
                           FocusScope.of(context).unfocus();
                           if (_formKey.currentState!.saveAndValidate(focusOnInvalid: false)) {
@@ -64,16 +76,13 @@ class _LoginPageState extends State<LoginPage> {
                         },
                         child: auth.isLoading ? Center(
                             child: CircularProgressIndicator()) : const Text('Login'),
-                      );
-                    }
-                  ),
-
+                      ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text('Don\'t have an account'),
                       TextButton(onPressed: (){
-                        FocusScope.of(context).unfocus();
+                        dispose1();
                         Get.to(() => SignUpPage(), transition: Transition.leftToRight);
                       }, child: Text('Sign Up'))
                     ],

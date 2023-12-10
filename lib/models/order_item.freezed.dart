@@ -22,6 +22,7 @@ OrderItem _$OrderItemFromJson(Map<String, dynamic> json) {
 mixin _$OrderItem {
   List<OrderData> get orderItems => throw _privateConstructorUsedError;
   int get totalPrice => throw _privateConstructorUsedError;
+  String get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +35,7 @@ abstract class $OrderItemCopyWith<$Res> {
   factory $OrderItemCopyWith(OrderItem value, $Res Function(OrderItem) then) =
       _$OrderItemCopyWithImpl<$Res, OrderItem>;
   @useResult
-  $Res call({List<OrderData> orderItems, int totalPrice});
+  $Res call({List<OrderData> orderItems, int totalPrice, String createdAt});
 }
 
 /// @nodoc
@@ -52,6 +53,7 @@ class _$OrderItemCopyWithImpl<$Res, $Val extends OrderItem>
   $Res call({
     Object? orderItems = null,
     Object? totalPrice = null,
+    Object? createdAt = null,
   }) {
     return _then(_value.copyWith(
       orderItems: null == orderItems
@@ -62,6 +64,10 @@ class _$OrderItemCopyWithImpl<$Res, $Val extends OrderItem>
           ? _value.totalPrice
           : totalPrice // ignore: cast_nullable_to_non_nullable
               as int,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -74,7 +80,7 @@ abstract class _$$OrderItemImplCopyWith<$Res>
       __$$OrderItemImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<OrderData> orderItems, int totalPrice});
+  $Res call({List<OrderData> orderItems, int totalPrice, String createdAt});
 }
 
 /// @nodoc
@@ -90,6 +96,7 @@ class __$$OrderItemImplCopyWithImpl<$Res>
   $Res call({
     Object? orderItems = null,
     Object? totalPrice = null,
+    Object? createdAt = null,
   }) {
     return _then(_$OrderItemImpl(
       orderItems: null == orderItems
@@ -100,6 +107,10 @@ class __$$OrderItemImplCopyWithImpl<$Res>
           ? _value.totalPrice
           : totalPrice // ignore: cast_nullable_to_non_nullable
               as int,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -108,7 +119,9 @@ class __$$OrderItemImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$OrderItemImpl implements _OrderItem {
   const _$OrderItemImpl(
-      {required final List<OrderData> orderItems, required this.totalPrice})
+      {required final List<OrderData> orderItems,
+      required this.totalPrice,
+      required this.createdAt})
       : _orderItems = orderItems;
 
   factory _$OrderItemImpl.fromJson(Map<String, dynamic> json) =>
@@ -124,10 +137,12 @@ class _$OrderItemImpl implements _OrderItem {
 
   @override
   final int totalPrice;
+  @override
+  final String createdAt;
 
   @override
   String toString() {
-    return 'OrderItem(orderItems: $orderItems, totalPrice: $totalPrice)';
+    return 'OrderItem(orderItems: $orderItems, totalPrice: $totalPrice, createdAt: $createdAt)';
   }
 
   @override
@@ -138,13 +153,15 @@ class _$OrderItemImpl implements _OrderItem {
             const DeepCollectionEquality()
                 .equals(other._orderItems, _orderItems) &&
             (identical(other.totalPrice, totalPrice) ||
-                other.totalPrice == totalPrice));
+                other.totalPrice == totalPrice) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_orderItems), totalPrice);
+      const DeepCollectionEquality().hash(_orderItems), totalPrice, createdAt);
 
   @JsonKey(ignore: true)
   @override
@@ -163,7 +180,8 @@ class _$OrderItemImpl implements _OrderItem {
 abstract class _OrderItem implements OrderItem {
   const factory _OrderItem(
       {required final List<OrderData> orderItems,
-      required final int totalPrice}) = _$OrderItemImpl;
+      required final int totalPrice,
+      required final String createdAt}) = _$OrderItemImpl;
 
   factory _OrderItem.fromJson(Map<String, dynamic> json) =
       _$OrderItemImpl.fromJson;
@@ -172,6 +190,8 @@ abstract class _OrderItem implements OrderItem {
   List<OrderData> get orderItems;
   @override
   int get totalPrice;
+  @override
+  String get createdAt;
   @override
   @JsonKey(ignore: true)
   _$$OrderItemImplCopyWith<_$OrderItemImpl> get copyWith =>

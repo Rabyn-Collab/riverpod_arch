@@ -12,12 +12,14 @@ _$OrderItemImpl _$$OrderItemImplFromJson(Map<String, dynamic> json) =>
           .map((e) => OrderData.fromJson(e as Map<String, dynamic>))
           .toList(),
       totalPrice: json['totalPrice'] as int,
+      createdAt: json['createdAt'] as String,
     );
 
 Map<String, dynamic> _$$OrderItemImplToJson(_$OrderItemImpl instance) =>
     <String, dynamic>{
       'orderItems': instance.orderItems,
       'totalPrice': instance.totalPrice,
+      'createdAt': instance.createdAt,
     };
 
 _$OrderDataImpl _$$OrderDataImplFromJson(Map<String, dynamic> json) =>

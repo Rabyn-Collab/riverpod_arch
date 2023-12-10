@@ -23,6 +23,7 @@ mixin _$User {
   String get token => throw _privateConstructorUsedError;
   String get email => throw _privateConstructorUsedError;
   bool get isAdmin => throw _privateConstructorUsedError;
+  String get fullname => throw _privateConstructorUsedError;
   Shipping get shippingAddress => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -36,7 +37,11 @@ abstract class $UserCopyWith<$Res> {
       _$UserCopyWithImpl<$Res, User>;
   @useResult
   $Res call(
-      {String token, String email, bool isAdmin, Shipping shippingAddress});
+      {String token,
+      String email,
+      bool isAdmin,
+      String fullname,
+      Shipping shippingAddress});
 
   $ShippingCopyWith<$Res> get shippingAddress;
 }
@@ -57,6 +62,7 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? token = null,
     Object? email = null,
     Object? isAdmin = null,
+    Object? fullname = null,
     Object? shippingAddress = null,
   }) {
     return _then(_value.copyWith(
@@ -72,6 +78,10 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.isAdmin
           : isAdmin // ignore: cast_nullable_to_non_nullable
               as bool,
+      fullname: null == fullname
+          ? _value.fullname
+          : fullname // ignore: cast_nullable_to_non_nullable
+              as String,
       shippingAddress: null == shippingAddress
           ? _value.shippingAddress
           : shippingAddress // ignore: cast_nullable_to_non_nullable
@@ -96,7 +106,11 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String token, String email, bool isAdmin, Shipping shippingAddress});
+      {String token,
+      String email,
+      bool isAdmin,
+      String fullname,
+      Shipping shippingAddress});
 
   @override
   $ShippingCopyWith<$Res> get shippingAddress;
@@ -115,6 +129,7 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? token = null,
     Object? email = null,
     Object? isAdmin = null,
+    Object? fullname = null,
     Object? shippingAddress = null,
   }) {
     return _then(_$UserImpl(
@@ -130,6 +145,10 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.isAdmin
           : isAdmin // ignore: cast_nullable_to_non_nullable
               as bool,
+      fullname: null == fullname
+          ? _value.fullname
+          : fullname // ignore: cast_nullable_to_non_nullable
+              as String,
       shippingAddress: null == shippingAddress
           ? _value.shippingAddress
           : shippingAddress // ignore: cast_nullable_to_non_nullable
@@ -145,6 +164,7 @@ class _$UserImpl implements _User {
       {required this.token,
       required this.email,
       required this.isAdmin,
+      required this.fullname,
       required this.shippingAddress});
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
@@ -157,11 +177,13 @@ class _$UserImpl implements _User {
   @override
   final bool isAdmin;
   @override
+  final String fullname;
+  @override
   final Shipping shippingAddress;
 
   @override
   String toString() {
-    return 'User(token: $token, email: $email, isAdmin: $isAdmin, shippingAddress: $shippingAddress)';
+    return 'User(token: $token, email: $email, isAdmin: $isAdmin, fullname: $fullname, shippingAddress: $shippingAddress)';
   }
 
   @override
@@ -172,14 +194,16 @@ class _$UserImpl implements _User {
             (identical(other.token, token) || other.token == token) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin) &&
+            (identical(other.fullname, fullname) ||
+                other.fullname == fullname) &&
             (identical(other.shippingAddress, shippingAddress) ||
                 other.shippingAddress == shippingAddress));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, token, email, isAdmin, shippingAddress);
+  int get hashCode => Object.hash(
+      runtimeType, token, email, isAdmin, fullname, shippingAddress);
 
   @JsonKey(ignore: true)
   @override
@@ -200,6 +224,7 @@ abstract class _User implements User {
       {required final String token,
       required final String email,
       required final bool isAdmin,
+      required final String fullname,
       required final Shipping shippingAddress}) = _$UserImpl;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
@@ -210,6 +235,8 @@ abstract class _User implements User {
   String get email;
   @override
   bool get isAdmin;
+  @override
+  String get fullname;
   @override
   Shipping get shippingAddress;
   @override

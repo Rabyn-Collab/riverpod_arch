@@ -3,6 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterspod/common_widgets/toast_widget.dart';
 import 'package:flutterspod/constants/app_sizes.dart';
 import 'package:flutterspod/provider/auth_provider.dart';
+import 'package:flutterspod/provider/user_notifier.dart';
+import 'package:flutterspod/provider/user_notifier.dart';
+import 'package:flutterspod/provider/user_notifier.dart';
 import 'package:flutterspod/shared/other_provider.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -25,7 +28,8 @@ class _SignPageState extends ConsumerState<SignUpPage> {
     final mode = ref.watch(modeProvider);
     ref.listen(authProvider, (previous, next) {
       if(next.isError){
-        Toasts.showError(message: next.errMsg);
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('healksjdlskajsdasadlkj')));
+        //Toasts.showError(message: next.errMsg);
       }else if(next.isSuccess){
         Get.back();
         Toasts.showSuccess(message: 'successfully register');

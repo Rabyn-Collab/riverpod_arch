@@ -11,7 +11,7 @@ Dio client (ClientRef ref) => Dio(
 );
 
 
-@Riverpod(keepAlive: true)
+@riverpod
 Dio authClient (AuthClientRef ref) {
   final auth = ref.watch(authProvider);
   return Dio(

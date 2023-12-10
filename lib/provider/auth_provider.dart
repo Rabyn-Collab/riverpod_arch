@@ -6,14 +6,15 @@ import 'package:flutterspod/service/auth_service.dart';
 
 
 
-final authProvider = StateNotifierProvider<AuthProvider, UserState>((ref) => AuthProvider(
+final authProvider = StateNotifierProvider.autoDispose<AuthProvider, UserState>((ref) => AuthProvider(
     UserState(
       isSuccess: false,
       errMsg: '',
       isError: false,
       isLoading: false,
       user: ref.watch(boxA)
-    ), ref.watch(authService)));
+    ), ref.watch(authService)
+));
 
 
 class AuthProvider extends StateNotifier<UserState>{

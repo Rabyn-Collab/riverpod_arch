@@ -11,6 +11,7 @@ class User with _$User{
     required String token,
     required String email,
     required bool isAdmin,
+    required String fullname,
     required Shipping shippingAddress
   }) = _User;
 
