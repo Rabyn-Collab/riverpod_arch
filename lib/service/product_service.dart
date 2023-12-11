@@ -44,6 +44,44 @@ class ProductService{
 
 
 
+  Future<Product>  getProductById ({
+    required String id
+  }) async{
+
+    try{
+      final response = await auth_dio.get('${Api.commonProduct}/$id');
+      return  Product.fromJson(response.data);
+    }on DioException catch (err){
+      throw ApiError.errorCheck(err);
+    }
+  }
+
+
+
+  Future<Either<String, bool>>  addReview ({
+ required String comment,
+ required double  rating,
+ required String username,
+    required String id
+  }) async{
+
+    try{
+        final response = await auth_dio.patch('${Api.commonProduct}/$id', data: {
+          "comment": "wow nice product",
+          "rating": 5,
+          "username": "Babyn Sharma"
+        });
+
+      return Right(true);
+    }on DioException catch (err){
+      print(err);
+      return  Left(ApiError.errorCheck(err));
+    }
+  }
+
+
+
+
   Future<Either<String, bool>>  updateProduct ({
     required Map<String, dynamic> data,
     XFile? image,

@@ -3,11 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterspod/common_widgets/toast_widget.dart';
 import 'package:flutterspod/constants/app_sizes.dart';
 import 'package:flutterspod/provider/auth_provider.dart';
-import 'package:flutterspod/provider/user_notifier.dart';
-import 'package:flutterspod/provider/user_notifier.dart';
-import 'package:flutterspod/provider/user_notifier.dart';
 import 'package:flutterspod/shared/other_provider.dart';
 import 'package:flutterspod/views/auth/sign_up_page.dart';
+import 'package:flutterspod/views/main/home_page.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
@@ -44,6 +42,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('healksjdlskajsdasadlkj')));
          Toasts.showError(message: next.errMsg);
       }else if(next.isSuccess){
+        Get.offAll(() => HomePage());
         Toasts.showSuccess(message: 'successfully login');
       }
     });
@@ -83,7 +82,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       Text('Don\'t have an account'),
                       TextButton(onPressed: (){
                         dispose1();
-                        Get.to(() => SignUpPage(), transition: Transition.leftToRight);
+                        Get.off(() => SignUpPage(), transition: Transition.leftToRight);
                       }, child: Text('Sign Up'))
                     ],
                   )

@@ -1,8 +1,8 @@
-
-
-
-
 import 'package:flutterspod/constants/api.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'product.g.dart';
+part 'product.freezed.dart';
 
 class Product{
 
@@ -16,7 +16,7 @@ class Product{
     final String brand;
   final String category;
   final  int countInStock;
-  final List reviews;
+  final List<Review> reviews;
 
   Product({
     required this.rating,
@@ -45,8 +45,27 @@ class Product{
         product_image: '${Api.baseUrl}${json['product_image']}',
         product_name: json['product_name'],
         product_price: json['product_price'],
-        reviews: json['reviews']
+        reviews: (json['reviews'] as List).map((e) => Review.fromJson(e)).toList()
     );
   }
 
 }
+
+
+@freezed
+class Review with _$Review{
+
+  const factory Review({
+   required String username,
+   required String comment,
+   required num rating,
+   required String user,
+
+  }) = _Review;
+
+  factory Review.fromJson(Map<String, Object?> json) => _$ReviewFromJson(json);
+
+}
+
+
+

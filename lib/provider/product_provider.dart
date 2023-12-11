@@ -17,6 +17,9 @@ ProductService productService (ProductServiceRef ref) => ProductService( ref.wat
 @riverpod
 Future<List<Product>> product(ProductRef ref) => ref.read(productServiceProvider).getProducts();
 
+@riverpod
+Future<Product> productSingle(ProductRef ref, String id) => ref.read(productServiceProvider).getProductById(id: id);
+
 
 //final productProvider = FutureProvider((ref) => ref.read(productServiceProvider).getProducts());
 
@@ -65,7 +68,24 @@ class ProductNotifier extends StateNotifier<CrudState>{
   }
 
 
-  Future<void>  removeProduct ({
+  Future<void>  addReview ({
+    required String comment,
+    required double  rating,
+    required String username,
+    required String id
+  }) async{
+    state = state.copyWith(isError: false, isSuccess: false, isLoading: true);
+    final response = await service.addReview(comment: comment, rating: rating, username: username, id: id);
+    response.fold((l) {
+      state = state.copyWith(isLoading: false, isError: true,isSuccess: false, errMsg: l);
+    }, (r) {
+      state = state.copyWith(isLoading: false, isError: false,isSuccess: true);
+    });
+  }
+
+
+
+    Future<void>  removeProduct ({
     required String id
   }) async{
     state = state.copyWith(isError: false, isSuccess: false, isLoading: true);

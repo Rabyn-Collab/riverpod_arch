@@ -7,6 +7,7 @@ import 'package:flutterspod/provider/user_notifier.dart';
 import 'package:flutterspod/provider/user_notifier.dart';
 import 'package:flutterspod/provider/user_notifier.dart';
 import 'package:flutterspod/shared/other_provider.dart';
+import 'package:flutterspod/views/auth/login_page.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
@@ -40,7 +41,11 @@ class _SignPageState extends ConsumerState<SignUpPage> {
     final toggle = ref.watch(toggleProvider);
 
 
-    return PopScope(
+    return WillPopScope(
+      onWillPop: () async{
+        Get.off(() => LoginPage());
+        return true;
+      },
       // canPop: auth.isLoading ? false: true,
       child: Scaffold(
         appBar: AppBar(
