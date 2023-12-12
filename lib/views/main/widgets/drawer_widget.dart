@@ -23,8 +23,8 @@ class DrawerWidget extends StatelessWidget{
           DrawerHeader(child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(state.user!.email),
-              Text(state.user!.fullname),
+              if(state.user != null) Text(state.user!.email),
+              if(state.user != null) Text(state.user!.fullname),
             ],
           )),
           if(state.user?.isAdmin == true)ListTile(

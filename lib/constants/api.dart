@@ -4,8 +4,8 @@
 
 
 class Api{
-  //static const baseUrl = 'https://shop-site-i4z0.onrender.com/api';
-  static const baseUrl = 'http://192.168.0.102:5000/api';
+  static const baseUrl = 'https://shop-server-sw10.onrender.com/api';
+  //static const baseUrl = 'http://192.168.0.102:5000/api';
 
 
   /// auth apis

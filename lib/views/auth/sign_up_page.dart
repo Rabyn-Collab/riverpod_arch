@@ -29,8 +29,8 @@ class _SignPageState extends ConsumerState<SignUpPage> {
     final mode = ref.watch(modeProvider);
     ref.listen(authProvider, (previous, next) {
       if(next.isError){
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('healksjdlskajsdasadlkj')));
-        //Toasts.showError(message: next.errMsg);
+      //  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('healksjdlskajsdasadlkj')));
+        Toasts.showError(message: next.errMsg);
       }else if(next.isSuccess){
         Get.back();
         Toasts.showSuccess(message: 'successfully register');
@@ -121,7 +121,7 @@ class _SignPageState extends ConsumerState<SignUpPage> {
                   children: [
                     Text('Already have an account'),
                     TextButton(onPressed: (){
-                      Get.back();
+                      Get.off(() => LoginPage());
                     }, child: Text('Login'))
                   ],
                 )

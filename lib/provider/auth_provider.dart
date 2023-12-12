@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterspod/main.dart';
 import 'package:flutterspod/models/user_state.dart';
 import 'package:flutterspod/service/auth_service.dart';
+import 'package:flutterspod/views/auth/login_page.dart';
+import 'package:get/get.dart';
 
 
 
@@ -60,6 +62,7 @@ class AuthProvider extends StateNotifier<UserState>{
      response.fold((l) {
      state = state.copyWith(isLoading: false, isError: true,isSuccess: false, errMsg: l);
     }, (r) {
+       Get.offAll(() => LoginPage());
       state = state.copyWith(isLoading: false, isError: false,isSuccess: true,user: null);
     });
   }

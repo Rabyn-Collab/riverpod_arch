@@ -18,7 +18,7 @@ ProductService productService (ProductServiceRef ref) => ProductService( ref.wat
 Future<List<Product>> product(ProductRef ref) => ref.read(productServiceProvider).getProducts();
 
 @riverpod
-Future<Product> productSingle(ProductRef ref, String id) => ref.read(productServiceProvider).getProductById(id: id);
+Future<Product> productSingle(ProductSingleRef ref, String id) => ref.read(productServiceProvider).getProductById(id: id);
 
 
 //final productProvider = FutureProvider((ref) => ref.read(productServiceProvider).getProducts());
@@ -91,6 +91,7 @@ class ProductNotifier extends StateNotifier<CrudState>{
     state = state.copyWith(isError: false, isSuccess: false, isLoading: true);
     final response = await service.removeProduct(id: id);
     response.fold((l) {
+
       state = state.copyWith(isLoading: false, isError: true,isSuccess: false, errMsg: l);
     }, (r) {
       state = state.copyWith(isLoading: false, isError: false,isSuccess: true);

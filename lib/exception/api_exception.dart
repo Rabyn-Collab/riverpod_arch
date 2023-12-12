@@ -21,7 +21,7 @@ static  String errorCheck(DioException error){
 
         switch(error.response!.statusCode){
            case 400:
-          return  "Bad request";
+             return  error.response.toString();
           case 401:
             return  "${error.response}";
 

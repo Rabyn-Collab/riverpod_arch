@@ -62,7 +62,7 @@ flutter_native_splash:
   #color_dark: "#042a49"
 
   android_12:
-  image: assets/images/movie.png
+  image: assets/images/shop.png
 
   # The image_dark, color_dark, icon_background_color_dark, and branding_dark set values that
   # apply when the device is in dark mode. If they are not specified, the app will use the
@@ -92,7 +92,7 @@ dev_dependencies:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/movie.png"
+  image_path: "assets/images/shop.png"
 
 
 
