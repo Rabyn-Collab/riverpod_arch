@@ -52,6 +52,7 @@ class Home extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (c, s) => GetMaterialApp(
+        title: "It's On",
         debugShowCheckedModeBanner: false,
          theme: ThemeData.dark(
            useMaterial3: true
