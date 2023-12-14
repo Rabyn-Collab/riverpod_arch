@@ -38,23 +38,24 @@ dependencies:
   get: ^4.6.6
   flutter_screenutil: ^5.9.0
   flutter_riverpod: ^2.4.6
-  intl: ^0.18.1
   dio: ^5.3.3
-  skeletonizer: ^0.8.0
   cached_network_image: ^3.3.0
   fpdart: ^1.1.0
-  fluttertoast: ^8.2.4
   lottie: ^2.7.0
-  flutter_offline: ^3.0.0
   flutter_native_splash: ^2.3.5
-  hive: ^2.2.3
-  hive_flutter: ^1.1.0
   riverpod_annotation: ^2.3.1
   flutter_form_builder: ^9.1.1
   form_builder_validators: ^9.1.0
   freezed_annotation: ^2.4.1
   image_picker: ^1.0.4
   flutter_rating_bar: ^4.0.1
+  firebase_core: ^2.24.2
+  flutter_chat_types: ^3.6.2
+  firebase_auth: ^4.15.3
+  firebase_storage: ^11.5.6
+  firebase_messaging: ^14.7.9
+  flutter_chat_ui: ^1.6.10
+  cloud_firestore: ^4.13.6
 
 flutter_native_splash:
   color: "#42a5f5"

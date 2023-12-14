@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "219569610883",
+    "project_id": "chat-f98be",
+    "storage_bucket": "chat-f98be.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:219569610883:android:e1df9e0e2a04a4c1a0fbb6",
+        "android_client_info": {
+          "package_name": "com.example.flutterspod"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAB_J2he06fLPRXM0BMcYtaT_JVUrPIDio"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
