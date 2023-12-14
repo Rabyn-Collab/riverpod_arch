@@ -1,5 +1,8 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutterspod/firebase_options.dart';
+import 'package:flutterspod/views/auth/login_page.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -11,7 +14,9 @@ void main () async{
  WidgetsFlutterBinding.ensureInitialized();
  await Future.delayed(Duration(milliseconds: 500));
 
-
+ await Firebase.initializeApp(
+   options: DefaultFirebaseOptions.currentPlatform,
+ );
 
 runApp(
     ProviderScope(
@@ -39,18 +44,8 @@ class Home extends StatelessWidget {
         debugShowCheckedModeBanner: false,
          theme: ThemeData.dark(
            useMaterial3: true
-         ).copyWith(
-
-           appBarTheme: AppBarTheme(
-
-           ),
-           // textTheme: TextTheme(
-           //   titleMedium: TextStyle(
-           //     fontSize: 30,
-           //     fontWeight: FontWeight.w500
-           //   )
-           // )
          ),
+        home: LoginPage(),
       ),
     );
   }
