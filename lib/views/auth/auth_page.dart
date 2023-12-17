@@ -10,14 +10,14 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 
 
-class LoginPage extends ConsumerStatefulWidget{
-  const LoginPage({super.key});
+class AuthPage extends ConsumerStatefulWidget{
+  const AuthPage({super.key});
 
   @override
-  ConsumerState<LoginPage> createState() => _LoginPageState();
+  ConsumerState<AuthPage> createState() => _AuthPageState();
 }
 
-class _LoginPageState extends ConsumerState<LoginPage> {
+class _AuthPageState extends ConsumerState<AuthPage> {
   final _formKey = GlobalKey<FormBuilderState>();
 
 
@@ -29,16 +29,15 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
 
   ref.listen(authProvider, (previous, next) {
-
       if(next.hasError && !next.isLoading){
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              duration: Duration(seconds: 1),
             content: Text(next.error.toString())));
       }
     });
 
   final auth = ref.watch(authProvider);
-  print(auth);
-
     return Scaffold(
       body: SafeArea(
         child: FormBuilder(
