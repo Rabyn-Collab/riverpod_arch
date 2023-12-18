@@ -1,4 +1,8 @@
+import 'dart:io';
+import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
+import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AuthService {
@@ -24,10 +28,24 @@ class AuthService {
     required XFile image
   }) async {
     try {
-      final response = await _auth.signInWithEmailAndPassword(
+
+      final ref = FirebaseStorage.instance.ref().child('userImage/${image.name}');
+      await ref.putFile(File(image.path));
+      final response = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
+      final  url = await ref.getDownloadURL();
+      await FirebaseChatCore.instance.createUserInFirestore(
+        types.User(
+          firstName: username,
+          id: response.user!.uid,
+          imageUrl: url,
+          lastName: 'chatter',
+        ),
+      );
+
       return true;
     } on FirebaseException catch (err) {
+      print(err);
       throw err.message.toString();
     }
   }

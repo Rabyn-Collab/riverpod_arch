@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterspod/constants/app_sizes.dart';
 import 'package:flutterspod/provider/auth_provider.dart';
+import 'package:flutterspod/shared/ext_provider.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
@@ -38,6 +41,8 @@ class _AuthPageState extends ConsumerState<AuthPage> {
     });
 
   final auth = ref.watch(authProvider);
+  final isLogin = ref.watch(toggleProvider);
+  final image = ref.watch(imageCProvider);
     return Scaffold(
       body: SafeArea(
         child: FormBuilder(
@@ -46,19 +51,55 @@ class _AuthPageState extends ConsumerState<AuthPage> {
               padding: const EdgeInsets.all(20.0),
               child: ListView(
                 children: [
+                 if(!isLogin) _buildFormBuilderTextField(label: 'Username', name: 'username'),
+                  AppSizes.gapH10,
                   _buildFormBuilderTextField(label: 'Email', name: 'email', isEmail: true,),
                   AppSizes.gapH10,
-                  AppSizes.gapH10,
+
                   _buildFormBuilderTextField(label: 'Password', name: 'password', isPassword: true, isLast: true),
                  AppSizes.gapH10,
+                 AppSizes.gapH10,
+                 AppSizes.gapH10,
+
+                  if(!isLogin)  InkWell(
+                   onTap: (){
+                     ref.read(imageCProvider.notifier).pickImage();
+                   },
+                   child: Container(
+                     height: 150,
+                     width: double.infinity,
+                     decoration: BoxDecoration(
+                       border: Border.all(color: Colors.white)
+                     ),
+                     child: image == null ? Center(child: Text('please select an image')): Image.file(File(image.path)),
+                   ),
+                 ),
+
+
+
+                  if(!isLogin)   AppSizes.gapH10,
                  AppSizes.gapH10,
                  AppSizes.gapH10,
                   ElevatedButton(
                         onPressed: auth.isLoading ? null : () {
                           FocusScope.of(context).unfocus();
                           if (_formKey.currentState!.saveAndValidate(focusOnInvalid: false)) {
-                            ref.read(authProvider.notifier).userLogin(
-                                data: _formKey.currentState!.value);
+                            final map= _formKey.currentState!.value;
+                            if(isLogin){
+                              ref.read(authProvider.notifier).userLogin(
+                                  data: _formKey.currentState!.value);
+                            }else{
+                              if(image == null){
+
+                              }else{
+                                ref.read(authProvider.notifier).userRegister(
+                                    email: map['email'],
+                                    password: map['password'],
+                                    username: map['username'],
+                                    image: image);
+                              }
+                            }
+
                           } else {
                            // ref.read(modeProvider.notifier).change();
                           }
@@ -69,10 +110,10 @@ class _AuthPageState extends ConsumerState<AuthPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Don\'t have an account'),
+                      Text(isLogin ? 'Don\'t have an account': 'Already have an account'),
                       TextButton(onPressed: (){
-
-                      }, child: Text('Sign Up'))
+                        ref.read(toggleProvider.notifier).change();
+                      }, child: Text(isLogin ? 'Sign Up': 'Login'))
                     ],
                   )
                 ],
