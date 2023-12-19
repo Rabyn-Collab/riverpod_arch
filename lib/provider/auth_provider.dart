@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterspod/service/auth_service.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,7 +11,8 @@ import 'package:image_picker/image_picker.dart';
 
 final authProvider = AsyncNotifierProvider(() => AuthNotifier());
 
-final userStream = StreamProvider((ref) => FirebaseAuth.instance.authStateChanges());
+final userStream = StreamProvider.autoDispose((ref) => FirebaseAuth.instance.authStateChanges());
+final allUsersStream = StreamProvider.autoDispose((ref) => FirebaseChatCore.instance.users());
 
 
 // Stream<String>  getData () async*{
@@ -32,8 +34,16 @@ class AuthNotifier extends AsyncNotifier{
        AuthService.userLogin(data: data));
   }
 
+  Future<void> userLogOut() async {
+    state = const AsyncLoading();
 
-   Future<void> userRegister({
+    state = await AsyncValue.guard(() =>
+        AuthService.userLogOut());
+  }
+
+
+
+  Future<void> userRegister({
     required String email,
     required String password,
     required String username,

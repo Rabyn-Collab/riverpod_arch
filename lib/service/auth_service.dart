@@ -21,6 +21,16 @@ class AuthService {
 
 
 
+
+  static Future<void> userLogOut() async {
+    try {
+      final response = await _auth.signOut();
+    } on FirebaseAuthException catch (err) {
+      throw err.message.toString();
+    }
+  }
+
+
   static Future<bool> userRegister({
     required String email,
     required String password,
