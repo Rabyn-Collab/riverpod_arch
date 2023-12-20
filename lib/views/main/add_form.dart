@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterspod/constants/app_sizes.dart';
-import 'package:flutterspod/provider/auth_provider.dart';
 import 'package:flutterspod/provider/post_provider.dart';
 import 'package:flutterspod/shared/ext_provider.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -56,7 +55,7 @@ class _AuthPageState extends ConsumerState<AddForm> {
                 children: [
                   _buildFormBuilderTextField(label: 'Title', name: 'title'),
                   AppSizes.gapH10,
-                  _buildFormBuilderTextField(label: 'Detail', name: 'detail', isEmail: true,),
+                  _buildFormBuilderTextField(label: 'Detail', name: 'detail',),
                   AppSizes.gapH10,
 
                   AppSizes.gapH10,
@@ -115,8 +114,7 @@ class _AuthPageState extends ConsumerState<AddForm> {
   }
 
   Consumer _buildFormBuilderTextField({
-    bool? isEmail,
-    bool? isPassword,
+
     required String name,
     required String label,
     bool? isLast,
@@ -138,7 +136,7 @@ class _AuthPageState extends ConsumerState<AddForm> {
             ),
             validator: FormBuilderValidators.compose([
               FormBuilderValidators.required(),
-              if(isEmail !=null)  FormBuilderValidators.email(),
+
             ]),
           );
         }
