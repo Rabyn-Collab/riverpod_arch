@@ -59,4 +59,17 @@ class PostNotifier extends AsyncNotifier{
         PostService.removePost(imageId: imageId, postId: postId));
   }
 
+
+
+   Future<void> updatePost(
+      {required String title,
+        required String detail,
+        String? imageId,
+        required String postId,
+        XFile? image}) async {
+     state = const AsyncLoading();
+     state = await AsyncValue.guard(() =>
+         PostService.updatePost(title: title, detail: detail, postId: postId, image: image, imageId: imageId));
+  }
+
 }

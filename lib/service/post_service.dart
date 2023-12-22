@@ -71,7 +71,7 @@ class PostService {
         final newId = DateTime.now().toString();
         final ref1 = FirebaseStorage.instance.ref().child('postImage/$newId');
         await ref1.putFile(File(image.path));
-        final url = await ref.getDownloadURL();
+        final url = await ref1.getDownloadURL();
         await _db.doc(postId).update({
           'title': title,
           'detail': detail,

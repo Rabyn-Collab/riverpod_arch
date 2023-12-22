@@ -5,6 +5,7 @@ import 'package:flutterspod/constants/app_sizes.dart';
 import 'package:flutterspod/provider/auth_provider.dart';
 import 'package:flutterspod/provider/post_provider.dart';
 import 'package:flutterspod/views/main/add_form.dart';
+import 'package:flutterspod/views/main/edit_form.dart';
 import 'package:get/get.dart';
 
 
@@ -98,7 +99,10 @@ class HomePage extends ConsumerWidget{
                                               title: 'Edit or Remove',
                                               content: Text(''),
                                               actions: [
-                                                IconButton(onPressed: (){}, icon: Icon(Icons.edit)),
+                                                IconButton(onPressed: (){
+                                                  Navigator.of(context).pop();
+                                                  Get.to(() => EditForm(post: post), transition:  Transition.leftToRight);
+                                                }, icon: Icon(Icons.edit)),
                                                 IconButton(onPressed: (){}, icon: Icon(Icons.delete)),
                                               ]
                                             );
