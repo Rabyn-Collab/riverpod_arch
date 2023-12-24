@@ -12,6 +12,7 @@ import 'package:image_picker/image_picker.dart';
 final authProvider = AsyncNotifierProvider(() => AuthNotifier());
 
 final userStream = StreamProvider.autoDispose((ref) => FirebaseAuth.instance.authStateChanges());
+final userProfileStream = StreamProvider.family.autoDispose((ref, String userId) => AuthService.singleUser(userId: userId));
 final allUsersStream = StreamProvider.autoDispose((ref) => FirebaseChatCore.instance.users());
 
 

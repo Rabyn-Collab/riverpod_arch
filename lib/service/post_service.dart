@@ -108,14 +108,14 @@ class PostService {
   static Future<bool> addLike(
       {
         required String postId,
-        required String username,
+        required List<String> usernames,
         required int like}) async {
     try {
 
         await _db.doc(postId).update({
           'like': {
             'likes': like + 1,
-            'usernames': FieldValue.arrayUnion([username])
+            'usernames': FieldValue.arrayUnion(usernames)
           },
         });
 

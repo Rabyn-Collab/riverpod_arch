@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 class AuthService {
 
   static final _auth = FirebaseAuth.instance;
+  static final _db = FirebaseFirestore.instance.collection('users');
 
 
   static Future<void> userLogin({required Map<String, dynamic> data}) async {
@@ -17,6 +19,18 @@ class AuthService {
     } on FirebaseAuthException catch (err) {
       throw err.message.toString();
     }
+  }
+
+  static Stream<types.User> singleUser({required String userId})  {
+    return _db.doc(userId).snapshots().map((event) {
+       final json = event.data() as Map<String, dynamic>;
+       return types.User(
+         id: event.id,
+         imageUrl: json['imageUrl'],
+         firstName: json['firstName'],
+         lastName: json['lastName']
+       );
+     });
   }
 
 
@@ -50,6 +64,9 @@ class AuthService {
           id: response.user!.uid,
           imageUrl: url,
           lastName: 'chatter',
+          metadata: {
+            'email': email
+          }
         ),
       );
 

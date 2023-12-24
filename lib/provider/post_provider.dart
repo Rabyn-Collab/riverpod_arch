@@ -29,6 +29,26 @@ final postsStream = StreamProvider((ref) {
 });
 
 
+final singlePostStream = StreamProvider.family((ref, String postId) {
+  final snapshots = FirebaseFirestore.instance.collection('posts').doc(postId).snapshots();
+  return snapshots.map((e)  {
+    final json = e.data() as Map<String, dynamic>;
+    return Post(
+        comments: (json['comments'] as List).map((e) => Comment.fromJson(e)).toList(),
+        imageUrl: json['imageUrl'],
+        id: e.id,
+        title: e['title'],
+        detail: e['detail'],
+        imageId: e['imageId'],
+        userId: e['userId'],
+        like: Like.fromJson(json['like'])
+    );
+});
+});
+
+
+
+
 
 
 class PostNotifier extends AsyncNotifier{
@@ -71,5 +91,26 @@ class PostNotifier extends AsyncNotifier{
      state = await AsyncValue.guard(() =>
          PostService.updatePost(title: title, detail: detail, postId: postId, image: image, imageId: imageId));
   }
+
+
+  Future<void> addLike(
+      {
+        required String postId,
+        required List<String> usernames,
+        required int like}) async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() =>
+        PostService.addLike(postId: postId, usernames: usernames, like: like));
+  }
+
+
+  Future<void> addComment(
+      {required String postId,
+        required Comment comment}) async {
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() =>
+        PostService.addComment(postId: postId, comment: comment));
+  }
+
 
 }
