@@ -7,9 +7,10 @@ import 'package:flutterspod/provider/post_provider.dart';
 import 'package:flutterspod/views/main/add_form.dart';
 import 'package:flutterspod/views/main/detail_page.dart';
 import 'package:flutterspod/views/main/edit_form.dart';
+import 'package:flutterspod/views/user_detail.dart';
 import 'package:get/get.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
-
+import 'package:cached_network_image/cached_network_image.dart';
 
 class HomePage extends ConsumerWidget{
 
@@ -71,16 +72,21 @@ class HomePage extends ConsumerWidget{
                        itemCount: data.length,
                        itemBuilder: (context, index){
                          final user = data[index];
-                         return Column(
-                           crossAxisAlignment: CrossAxisAlignment.center,
-                           children: [
-                              CircleAvatar(
-                                radius: 45,
-                                 backgroundImage: NetworkImage(user.imageUrl!),
-                              ),
-                             AppSizes.gapH6,
-                             Text(user.firstName!)
-                           ],
+                         return InkWell(
+                           onTap: (){
+                             Get.to(() => UserDetail(user: user), transition:  Transition.leftToRight);
+                           },
+                           child: Column(
+                             crossAxisAlignment: CrossAxisAlignment.center,
+                             children: [
+                                CircleAvatar(
+                                  radius: 45,
+                                   backgroundImage: CachedNetworkImageProvider(user.imageUrl!),
+                                ),
+                               AppSizes.gapH6,
+                               Text(user.firstName!)
+                             ],
+                           ),
                          );
                        }
                    );
@@ -97,7 +103,7 @@ class HomePage extends ConsumerWidget{
                         final post = data[index];
                         return InkWell(
                           onTap: (){
-                            Get.to(() => DetailPage(postId: post.id), transition: Transition.leftToRight);
+                            Get.to(() => DetailPage(postId: post.id, user: user), transition: Transition.leftToRight);
                           },
                           child: Card(
                               child: Column(
@@ -134,7 +140,7 @@ class HomePage extends ConsumerWidget{
                                     height: 300,
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(vertical: 10),
-                                      child: Image.network(post.imageUrl),
+                                      child: CachedNetworkImage(imageUrl:post.imageUrl),
                                     ),
                                   ),
                                   Padding(

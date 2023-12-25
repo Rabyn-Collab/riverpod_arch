@@ -56,4 +56,13 @@ class Comment{
         comment: json['comment'],
         userImage: json['userImage']);
   }
+
+
+  Map toMap(){
+    return {
+    'comment': this.comment,
+    'username': this.username,
+    'userImage': this.userImage
+    };
+  }
 }

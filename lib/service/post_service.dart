@@ -91,11 +91,11 @@ class PostService {
 
   static Future<bool> addComment(
       {required String postId,
-        required Comment comment}) async {
+        required List<Comment> comment}) async {
     try {
 
         await _db.doc(postId).update({
-          'comments': FieldValue.arrayUnion([comment]),
+          'comments': FieldValue.arrayUnion(comment.map((e) => e.toMap()).toList()),
         });
 
       return true;

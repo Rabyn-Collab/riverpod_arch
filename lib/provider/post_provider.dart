@@ -11,6 +11,25 @@ import 'package:image_picker/image_picker.dart';
 final postNotifier = AsyncNotifierProvider(() => PostNotifier());
 
 
+final userPostStream = StreamProvider.family((ref, String uid) {
+  final snapshots = FirebaseFirestore.instance.collection('posts').where('userId', isEqualTo: uid).snapshots();
+  return snapshots.map((event) => event.docs.map((e) {
+    final json = e.data();
+    return Post(
+        comments: (json['comments'] as List).map((e) => Comment.fromJson(e)).toList(),
+        imageUrl: json['imageUrl'],
+        id: e.id,
+        title: e['title'],
+        detail: e['detail'],
+        imageId: e['imageId'],
+        userId: e['userId'],
+        like: Like.fromJson(json['like'])
+    );
+  }).toList());
+});
+
+
+
 final postsStream = StreamProvider((ref) {
     final snapshots = FirebaseFirestore.instance.collection('posts').snapshots();
   return snapshots.map((event) => event.docs.map((e) {
@@ -106,10 +125,10 @@ class PostNotifier extends AsyncNotifier{
 
   Future<void> addComment(
       {required String postId,
-        required Comment comment}) async {
+        required List<Comment> comments}) async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() =>
-        PostService.addComment(postId: postId, comment: comment));
+        PostService.addComment(postId: postId, comment: comments));
   }
 
 
