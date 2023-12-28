@@ -14,7 +14,6 @@ class UserDetail extends ConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
 
-
     ref.listen(roomNotifier, (previous, next) {
       if(next.hasError && !next.isLoading){
         ScaffoldMessenger.of(context).showSnackBar(
@@ -22,10 +21,11 @@ class UserDetail extends ConsumerWidget {
                 duration: Duration(seconds: 1),
                 content: Text(next.error.toString())));
       }else if(!next.hasError && !next.isLoading){
-       Get.to(() => ChatPage(room: next.value), transition: Transition.leftToRight);
+       Get.to(() => ChatPage(room: next.value, token: user.metadata!['token']), transition: Transition.leftToRight);
       }
     });
     final state = ref.watch(userPostStream(user.id));
+    final roomState = ref.watch(singleRoomStream(user.id));
     return Scaffold(
         body: SafeArea(
             child: state.when(
@@ -44,10 +44,15 @@ class UserDetail extends ConsumerWidget {
                             Column(
                               children: [
                                 Text(user.firstName!),
-                                ElevatedButton(
-                                    onPressed: (){
-                                       ref.read(roomNotifier.notifier).createRoom(user: user);
-                                    }, child: Text('Start Chat'))
+
+                                roomState.when(
+                                    data: (data){
+                              return   ElevatedButton(
+                                  onPressed: (){
+                                    ref.read(roomNotifier.notifier).createRoom(user: user);
+                                  }, child: Text('Start Chat'));
+                                    }, error: (err, st) => Center(child: Text('$err')), loading: () => Center(child: CircularProgressIndicator()))
+
                               ],
                             )
                           ],

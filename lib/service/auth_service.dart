@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,8 +15,15 @@ class AuthService {
 
   static Future<void> userLogin({required Map<String, dynamic> data}) async {
     try {
+      final token = await FirebaseMessaging.instance.getToken();
       final response = await _auth.signInWithEmailAndPassword(
           email: data['email'], password: data['password']);
+      await _db.doc(response.user!.uid).update({
+        'metadata': {
+          'email': data['email'],
+          'token': token
+        }
+      });
     } on FirebaseAuthException catch (err) {
       throw err.message.toString();
     }
@@ -52,7 +60,7 @@ class AuthService {
     required XFile image
   }) async {
     try {
-
+        final token = await FirebaseMessaging.instance.getToken();
       final ref = FirebaseStorage.instance.ref().child('userImage/${image.name}');
       await ref.putFile(File(image.path));
       final response = await _auth.createUserWithEmailAndPassword(
@@ -65,7 +73,8 @@ class AuthService {
           imageUrl: url,
           lastName: 'chatter',
           metadata: {
-            'email': email
+            'email': email,
+            'token': token
           }
         ),
       );

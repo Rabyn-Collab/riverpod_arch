@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_firebase_chat_core/flutter_firebase_chat_core.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutterspod/service/chat_rooms_service.dart';
@@ -11,6 +12,15 @@ final roomStream = StreamProvider.autoDispose((ref) => FirebaseChatCore.instance
 final chatStream = StreamProvider.autoDispose.family((ref, types.Room room) => FirebaseChatCore.instance.messages(room));
 
 final roomNotifier = AsyncNotifierProvider(() => RoomNotifier());
+
+
+final  singleRoomStream = StreamProvider.family((ref, String id) {
+  final snapshots = FirebaseFirestore.instance.collection('rooms').where('userIds', arrayContains: id).snapshots();
+  return snapshots.map((event) => event);
+
+});
+
+
 
 class RoomNotifier extends AsyncNotifier{
 

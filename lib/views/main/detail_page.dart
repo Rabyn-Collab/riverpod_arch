@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterspod/models/post.dart';
+import 'package:flutterspod/provider/chat_room_provider.dart';
 import 'package:flutterspod/provider/post_provider.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 
@@ -12,6 +13,7 @@ final commentC = TextEditingController();
   @override
   Widget build(BuildContext context, ref) {
     final state = ref.watch(singlePostStream(postId));
+
     return Scaffold(
         body: state.when(
             data: (data){

@@ -1,25 +1,58 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterspod/constants/app_sizes.dart';
+import 'package:flutterspod/firebase_service.dart';
 import 'package:flutterspod/provider/auth_provider.dart';
 import 'package:flutterspod/provider/post_provider.dart';
 import 'package:flutterspod/views/main/add_form.dart';
 import 'package:flutterspod/views/main/detail_page.dart';
 import 'package:flutterspod/views/main/edit_form.dart';
+import 'package:flutterspod/views/main/recent_chats.dart';
 import 'package:flutterspod/views/user_detail.dart';
 import 'package:get/get.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:cached_network_image/cached_network_image.dart';
 
-class HomePage extends ConsumerWidget{
+class HomePage extends ConsumerStatefulWidget{
 
-
-  final uid = FirebaseAuth.instance.currentUser!.uid;
-  late types.User user;
 
   @override
-  Widget build(BuildContext context, ref) {
+  ConsumerState<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends ConsumerState<HomePage> {
+  final uid = FirebaseAuth.instance.currentUser!.uid;
+
+  late types.User user;
+
+
+  @override
+  void initState() {
+    FirebaseMessaging.instance.getInitialMessage().then((message) {
+      if (message != null) {
+        FirebaseService.createanddisplaynotification(message);
+      }
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      if (message.notification != null) {
+          FirebaseService.createanddisplaynotification(message);
+      }
+    });
+
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      if (message.notification != null) {
+        FirebaseService.createanddisplaynotification(message);
+      }
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final users = ref.watch(allUsersStream);
     final posts = ref.watch(postsStream);
     final userState = ref.watch(userProfileStream(uid));
@@ -40,6 +73,14 @@ class HomePage extends ConsumerWidget{
                   },
                   error: (err,st) => Center(child: Text('$err')),
                   loading: () => Center(child: CircularProgressIndicator())
+              ),
+              ListTile(
+                onTap: (){
+                  Navigator.of(context).pop();
+                  Get.to(() => RecentChats(), transition: Transition.leftToRight);
+                },
+                leading: Icon(Icons.message),
+                title: Text('Recent Chats'),
               ),
               ListTile(
                 onTap: (){
