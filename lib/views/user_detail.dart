@@ -9,7 +9,8 @@ import 'package:get/get.dart';
 
 class UserDetail extends ConsumerWidget {
   final types.User user;
-  const UserDetail({super.key, required this.user});
+  final String currentUser;
+  const UserDetail({super.key, required this.user, required this.currentUser});
 
   @override
   Widget build(BuildContext context, ref) {
@@ -21,7 +22,7 @@ class UserDetail extends ConsumerWidget {
                 duration: Duration(seconds: 1),
                 content: Text(next.error.toString())));
       }else if(!next.hasError && !next.isLoading){
-       Get.to(() => ChatPage(room: next.value, token: user.metadata!['token']), transition: Transition.leftToRight);
+       Get.to(() => ChatPage(room: next.value, user: user, currentUser:  currentUser), transition: Transition.leftToRight);
       }
     });
     final state = ref.watch(userPostStream(user.id));

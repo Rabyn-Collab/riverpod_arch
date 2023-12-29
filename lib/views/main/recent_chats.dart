@@ -21,11 +21,12 @@ class RecentChats extends ConsumerWidget {
                     itemCount: data.length,
                     itemBuilder: (context, index){
                       final user = data[index].users.firstWhere((element) => element.id != FirebaseAuth.instance.currentUser!.uid);
+                      final cUser = data[index].users.firstWhere((element) => element.id == FirebaseAuth.instance.currentUser!.uid);
 
                       return Card( 
                         child: ListTile(
                           onTap: (){
-                           Get.to(() => ChatPage(room: data[index], token: user.metadata!['token']), transition: Transition.leftToRight);
+                           Get.to(() => ChatPage(room: data[index], user: user, currentUser: cUser.firstName!), transition: Transition.leftToRight);
                           },
                           leading: CircleAvatar(
                             backgroundImage: NetworkImage(data[index].imageUrl!),

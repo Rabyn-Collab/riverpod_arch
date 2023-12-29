@@ -20,11 +20,9 @@ class FirebaseService {
     android: AndroidInitializationSettings("@mipmap/ic_launcher"),
   );
 
-  static void initialize()  async{
+  static  initialize()  async{
 
-    _notificationsPlugin.initialize(
-      initializationSettings,
-    );
+
     AndroidNotificationChannel channel = const AndroidNotificationChannel(
       'high_importance_channel', // id
       'High Importance Notifications', // title
@@ -44,7 +42,9 @@ class FirebaseService {
         AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
 
-
+    _notificationsPlugin.initialize(
+      initializationSettings,
+    );
   }
 
 
@@ -74,9 +74,10 @@ class FirebaseService {
 
 
   static Future<void> intiNotification() async{
-    final token = await _messaging.getToken();
     FirebaseMessaging.onBackgroundMessage(handleBack);
     initialize();
+    final token = await _messaging.getToken();
+
 
     print(token);
   }

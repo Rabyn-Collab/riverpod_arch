@@ -25,7 +25,7 @@ class HomePage extends ConsumerStatefulWidget{
 class _HomePageState extends ConsumerState<HomePage> {
   final uid = FirebaseAuth.instance.currentUser!.uid;
 
-  late types.User user;
+  late types.User currentUser;
 
 
   @override
@@ -63,7 +63,7 @@ class _HomePageState extends ConsumerState<HomePage> {
             children: [
               userState.when(
                   data: (data){
-                    user = data;
+                    currentUser = data;
                     return DrawerHeader(
                         decoration: BoxDecoration(
                           image: DecorationImage(image: NetworkImage(data.imageUrl!))
@@ -115,7 +115,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                          final user = data[index];
                          return InkWell(
                            onTap: (){
-                             Get.to(() => UserDetail(user: user), transition:  Transition.leftToRight);
+                             Get.to(() => UserDetail(
+                                  currentUser: currentUser.firstName!,
+                                 user: user), transition:  Transition.leftToRight);
                            },
                            child: Column(
                              crossAxisAlignment: CrossAxisAlignment.center,
@@ -144,7 +146,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                         final post = data[index];
                         return InkWell(
                           onTap: (){
-                            Get.to(() => DetailPage(postId: post.id, user: user), transition: Transition.leftToRight);
+                            Get.to(() => DetailPage(postId: post.id, user: currentUser), transition: Transition.leftToRight);
                           },
                           child: Card(
                               child: Column(
@@ -198,12 +200,12 @@ class _HomePageState extends ConsumerState<HomePage> {
                                                   padding: EdgeInsets.zero,
                                                 ),
                                                 onPressed: (){
-                                                  if(post.like.usernames.contains(user.firstName)){
+                                                  if(post.like.usernames.contains(currentUser.firstName)){
 
                                                   }else{
                                                     ref.read(postNotifier.notifier).addLike(
                                                         postId: post.id,
-                                                        usernames: [...post.like.usernames, user.firstName!],
+                                                        usernames: [...post.like.usernames, currentUser.firstName!],
                                                         like: post.like.likes
                                                     );
                                                   }
