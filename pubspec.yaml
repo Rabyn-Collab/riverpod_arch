@@ -58,6 +58,7 @@ dependencies:
   cloud_firestore: ^4.13.6
   flutter_firebase_chat_core: ^1.6.7
   flutter_local_notifications: ^16.2.0
+  connectivity_plus: ^5.0.2
 
 flutter_native_splash:
   color: "#42a5f5"
@@ -65,7 +66,7 @@ flutter_native_splash:
   #color_dark: "#042a49"
 
   android_12:
-  image: assets/images/shop.png
+  image: assets/images/chat.png
 
   # The image_dark, color_dark, icon_background_color_dark, and branding_dark set values that
   # apply when the device is in dark mode. If they are not specified, the app will use the
@@ -95,7 +96,7 @@ dev_dependencies:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/shop.png"
+  image_path: "assets/images/chat.png"
 
 
 

@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutterspod/connection_check.dart';
 import 'package:flutterspod/constants/app_sizes.dart';
 import 'package:flutterspod/firebase_service.dart';
 import 'package:flutterspod/provider/auth_provider.dart';
@@ -15,40 +17,105 @@ import 'package:get/get.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:cached_network_image/cached_network_image.dart';
 
-class HomePage extends ConsumerStatefulWidget{
+class HomePage extends ConsumerStatefulWidget {
 
 
   @override
   ConsumerState<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends ConsumerState<HomePage> {
+class _HomePageState extends ConsumerState<HomePage>  with WidgetsBindingObserver {
   final uid = FirebaseAuth.instance.currentUser!.uid;
 
   late types.User currentUser;
+  @override
+  void dispose() {
 
+    WidgetsBinding.instance.removeObserver(this);
+
+    super.dispose();
+  }
+
+  void setStatus(String status) async {
+    await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).update({
+      'lastName': status
+    });
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      // online
+      setStatus('Online');
+    } else if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.inactive) {
+      // offline
+      setStatus('Offline');
+    }
+  }
 
   @override
   void initState() {
-    FirebaseMessaging.instance.getInitialMessage().then((message) {
-      if (message != null) {
-        FirebaseService.createanddisplaynotification(message);
-      }
-    });
-
-    FirebaseMessaging.onMessageOpenedApp.listen((message) {
-      if (message.notification != null) {
-          FirebaseService.createanddisplaynotification(message);
-      }
-    });
-
-
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      if (message.notification != null) {
-        FirebaseService.createanddisplaynotification(message);
-      }
-    });
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+
+    // 1. This method call when app in terminated state and you get a notification
+    // when you click on notification app open from terminated state and you can get notification data in this method
+
+    FirebaseMessaging.instance.getInitialMessage().then(
+          (message) {
+        print("FirebaseMessaging.instance.getInitialMessage");
+        if (message != null) {
+          print("New Notification");
+          // if (message.data['_id'] != null) {
+          //   Navigator.of(context).push(
+          //     MaterialPageRoute(
+          //       builder: (context) => DemoScreen(
+          //         id: message.data['_id'],
+          //       ),
+          //     ),
+          //   );
+          // }
+          FirebaseService.createanddisplaynotification(message);
+        }
+      },
+    ).catchError((err) {
+      print(err);
+    });
+
+    // 2. This method only call when App in forground it mean app must be opened
+    FirebaseMessaging.onMessage.listen(
+          (message) {
+        print("FirebaseMessaging.onMessage.listen");
+        if (message.notification != null) {
+          print(message.notification!.title);
+          print(message.notification!.body);
+          print("message.data11 ${message.data}");
+           FirebaseService.createanddisplaynotification(message);
+
+        }
+      },
+    );
+
+    // 3. This method only call when App in background and not terminated(not closed)
+    FirebaseMessaging.onMessageOpenedApp.listen(
+          (message) {
+        print("FirebaseMessaging.onMessageOpenedApp.listen");
+        if (message.notification != null) {
+          print(message.notification!.title);
+          print(message.notification!.body);
+          print("message.data22 ${message.data['_id']}");
+          FirebaseService.createanddisplaynotification(message);
+        }
+      },
+    );
+    getToken();
+  }
+
+
+  getToken()async{
+    final response = await FirebaseMessaging.instance.getToken();
+    print(response);
   }
 
   @override
@@ -56,6 +123,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     final users = ref.watch(allUsersStream);
     final posts = ref.watch(postsStream);
     final userState = ref.watch(userProfileStream(uid));
+    final check = ref.watch(connectionProvider);
     return Scaffold(
       appBar: AppBar(),
         drawer: Drawer(
@@ -108,6 +176,7 @@ class _HomePageState extends ConsumerState<HomePage> {
              height: 165,
              child: users.when(
                  data: (data){
+
                    return ListView.builder(
                      scrollDirection: Axis.horizontal,
                        itemCount: data.length,
@@ -127,7 +196,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                    backgroundImage: CachedNetworkImageProvider(user.imageUrl!),
                                 ),
                                AppSizes.gapH6,
-                               Text(user.firstName!)
+                               Text(user.firstName!, style: TextStyle(color: user.lastName == 'Online' ? Colors.green: null),)
                              ],
                            ),
                          );

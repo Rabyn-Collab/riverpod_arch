@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterspod/firebase_options.dart';
 import 'package:flutterspod/firebase_service.dart';
@@ -8,7 +10,27 @@ import 'package:flutterspod/views/main/status_page.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
+  await Firebase.initializeApp();
+
+
+}
+
+
+const AndroidNotificationChannel channel = AndroidNotificationChannel(
+  "high_importance_channel",
+  "high_importance_channel",
+  importance: Importance.high,
+);
+
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+FlutterLocalNotificationsPlugin();
+
+const InitializationSettings initializationSettings =
+InitializationSettings(
+  android: AndroidInitializationSettings("@mipmap/ic_launcher"),
+);
 
 void main () async{
 
@@ -19,8 +41,13 @@ void main () async{
  await Firebase.initializeApp(
    options: DefaultFirebaseOptions.currentPlatform,
  );
- await FirebaseService.intiNotification();
-
+ FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+ await flutterLocalNotificationsPlugin
+     .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+     ?.createNotificationChannel(channel);
+ flutterLocalNotificationsPlugin.initialize(
+   initializationSettings,
+ );
 runApp(
     ProviderScope(
 
