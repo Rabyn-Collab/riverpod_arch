@@ -6,6 +6,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutterspod/firebase_options.dart';
 import 'package:flutterspod/firebase_service.dart';
+import 'package:flutterspod/views/check_permission.dart';
 import 'package:flutterspod/views/main/status_page.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -75,7 +76,7 @@ class Home extends StatelessWidget {
          theme: ThemeData.dark(
            useMaterial3: true
          ),
-        home: StatusPage(),
+        home: CheckPermission(),
       ),
     );
   }

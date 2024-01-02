@@ -59,6 +59,8 @@ dependencies:
   flutter_firebase_chat_core: ^1.6.7
   flutter_local_notifications: ^16.2.0
   connectivity_plus: ^5.0.2
+  google_maps_flutter: ^2.5.0
+  geolocator: ^10.1.0
 
 flutter_native_splash:
   color: "#42a5f5"
